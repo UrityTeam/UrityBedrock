@@ -13,40 +13,40 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Login = require("./LoginPacket");
-const PlayStatus = require("./PlayStatusPacket");
-const ResourcePackClientResponse = require("./ResourcePackClientResponsePacket");
-const ResourcePacksInfo = require("./ResourcePacksInfoPacket");
-const ResourcePackStack = require("./ResourcePackStackPacket");
-const StartGame = require("./StartGamePacket");
-const CreativeContent = require("./CreativeContentPacket");
-const BiomeDefinitionList = require("./BiomeDefinitionListPacket");
-const Text = require("./TextPacket");
-const SetTitle = require("./SetTitlePacket");
+const LoginPacket = require("./LoginPacket");
+const PlayStatusPacket = require("./PlayStatusPacket");
+const ResourcePackClientResponsePacket = require("./ResourcePackClientResponsePacket");
+const ResourcePacksInfoPacket = require("./ResourcePacksInfoPacket");
+const ResourcePackStackPacket = require("./ResourcePackStackPacket");
+const StartGamePacket = require("./StartGamePacket");
+const CreativeContentPacket = require("./CreativeContentPacket");
+const BiomeDefinitionListPacket = require("./BiomeDefinitionListPacket");
+const TextPacket = require("./TextPacket");
+const SetTitlePacket = require("./SetTitlePacket");
 const DisconnectPacket = require("./DisconnectPacket");
-const PlayerSkin = require("./PlayerSkinPacket");
-const SetLocalPlayerAsInitialized = require("./SetLocalPlayerAsInitializedPacket");
-const AvailableActorIdentifiers = require("./AvailableActorIdentifiersPacket");
+const PlayerSkinPacket = require("./PlayerSkinPacket");
+const SetLocalPlayerAsInitializedPacket = require("./SetLocalPlayerAsInitializedPacket");
+const AvailableActorIdentifiersPacket = require("./AvailableActorIdentifiersPacket");
 
 class PacketPool {
 
 	static #pool = new Map();
 
 	static init() {
-		this.registerPacket(Login);
-		this.registerPacket(PlayStatus);
-		this.registerPacket(ResourcePacksInfo);
-		this.registerPacket(ResourcePackClientResponse);
-		this.registerPacket(ResourcePackStack);
-		this.registerPacket(StartGame);
-		this.registerPacket(BiomeDefinitionList);
-		this.registerPacket(CreativeContent);
-		this.registerPacket(Text);
-		this.registerPacket(SetTitle);
+		this.registerPacket(LoginPacket);
+		this.registerPacket(PlayStatusPacket);
+		this.registerPacket(ResourcePacksInfoPacket);
+		this.registerPacket(ResourcePackClientResponsePacket);
+		this.registerPacket(ResourcePackStackPacket);
+		this.registerPacket(StartGamePacket);
+		this.registerPacket(BiomeDefinitionListPacket);
+		this.registerPacket(CreativeContentPacket);
+		this.registerPacket(TextPacket);
+		this.registerPacket(SetTitlePacket);
 		this.registerPacket(DisconnectPacket);
-		this.registerPacket(SetLocalPlayerAsInitialized);
-		this.registerPacket(AvailableActorIdentifiers);
-		// this.registerPacket(PlayerSkin);
+		this.registerPacket(SetLocalPlayerAsInitializedPacket);
+		this.registerPacket(AvailableActorIdentifiersPacket);
+		// this.registerPacket(PlayerSkinPacket);
 	}
 
 	static registerPacket(packet) {

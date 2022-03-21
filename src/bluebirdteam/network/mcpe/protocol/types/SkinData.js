@@ -17,137 +17,137 @@ const ProtocolInfo = require("../Identifiers");
 const UUID = require("../../../../utils/UUID");
 
 class SkinData {
-    
-    static ARM_SIZE_SLIM = "slim";
-    static ARM_SIZE_WIDE = "wide";
 
-    skinId;
-    playFabId;
-    resourcePatch;
-    skinImage;
-    animations;
-    capeImage;
-    geometryData;
-    #geometryDataEngineVersion;
-    animationData;
-    capeId;
-    fullSkinId;
-    armSize;
-    skinColor;
-    personaPieces;
-    pieceTintColors;
-    isVerified_1;
-    persona;
-    premium;
-    personaCapeOnClassic;
-    isPrimaryUser_1;
+	static ARM_SIZE_SLIM = "slim";
+	static ARM_SIZE_WIDE = "wide";
 
-    constructor(skinId, playFabId, resourcePatch, skinImage, animations = [], capeImage = null, geometryData = "", geometryDataEngineVersion = ProtocolInfo.MINECRAFT_VERSION, animationData = "", capeId = "", fullSkinId = null, armSize = SkinData.ARM_SIZE_WIDE, skinColor = "", personaPieces = [], pieceTintColors = [], isVerified = true, premium = false, persona = false, personaCapeOnClassic = false, isPrimaryUser = true) {
-        this.skinId = skinId;
-        this.playFabId = playFabId;
-        this.resourcePatch = resourcePatch;
-        this.skinImage = skinImage;
-        this.animations = animations;
-        this.capeImage = capeImage;
-        this.geometryData = geometryData;
-        this.#geometryDataEngineVersion = geometryDataEngineVersion;
-        this.animationData = animationData;
-        this.capeId = capeId;
-        this.fullSkinId = fullSkinId ? fullSkinId : UUID.fromRandom().toString();
-        this.armSize = armSize;
-        this.skinColor = skinColor;
-        this.personaPieces = personaPieces;
-        this.pieceTintColors = pieceTintColors;
-        this.isVerified_1 = isVerified;
-        this.persona = persona;
-        this.premium = premium;
-        this.personaCapeOnClassic = personaCapeOnClassic;
-        this.isPrimaryUser_1 = isPrimaryUser;
-    }
+	skinId;
+	playFabId;
+	resourcePatch;
+	skinImage;
+	animations;
+	capeImage;
+	geometryData;
+	#geometryDataEngineVersion;
+	animationData;
+	capeId;
+	fullSkinId;
+	armSize;
+	skinColor;
+	personaPieces;
+	pieceTintColors;
+	isVerified_1;
+	persona;
+	premium;
+	personaCapeOnClassic;
+	isPrimaryUser_1;
 
-    getSkinId(){
-        return this.skinId;
-    }
+	constructor(skinId, playFabId, resourcePatch, skinImage, animations = [], capeImage = null, geometryData = "", geometryDataEngineVersion = ProtocolInfo.MINECRAFT_VERSION, animationData = "", capeId = "", fullSkinId = null, armSize = SkinData.ARM_SIZE_WIDE, skinColor = "", personaPieces = [], pieceTintColors = [], isVerified = true, premium = false, persona = false, personaCapeOnClassic = false, isPrimaryUser = true) {
+		this.skinId = skinId;
+		this.playFabId = playFabId;
+		this.resourcePatch = resourcePatch;
+		this.skinImage = skinImage;
+		this.animations = animations;
+		this.capeImage = capeImage;
+		this.geometryData = geometryData;
+		this.#geometryDataEngineVersion = geometryDataEngineVersion;
+		this.animationData = animationData;
+		this.capeId = capeId;
+		this.fullSkinId = fullSkinId ? fullSkinId : UUID.fromRandom().toString();
+		this.armSize = armSize;
+		this.skinColor = skinColor;
+		this.personaPieces = personaPieces;
+		this.pieceTintColors = pieceTintColors;
+		this.isVerified_1 = isVerified;
+		this.persona = persona;
+		this.premium = premium;
+		this.personaCapeOnClassic = personaCapeOnClassic;
+		this.isPrimaryUser_1 = isPrimaryUser;
+	}
 
-    getPlayFabId(){
-        return this.playFabId;
-    }
+	getSkinId() {
+		return this.skinId;
+	}
 
-    getResourcePatch(){
-        return this.resourcePatch;
-    }
+	getPlayFabId() {
+		return this.playFabId;
+	}
 
-    getSkinImage(){
-        return this.skinImage;
-    }
+	getResourcePatch() {
+		return this.resourcePatch;
+	}
 
-    getAnimations(){
-        return this.animations;
-    }
+	getSkinImage() {
+		return this.skinImage;
+	}
 
-    getCapeImage(){
-        return this.capeImage;
-    }
+	getAnimations() {
+		return this.animations;
+	}
 
-    getGeometryData(){
-        return this.geometryData;
-    }
+	getCapeImage() {
+		return this.capeImage;
+	}
 
-    getGeometryDataEngineVersion() {
-        return this.#geometryDataEngineVersion;
-    }
+	getGeometryData() {
+		return this.geometryData;
+	}
 
-    getAnimationData(){
-        return this.animationData;
-    }
+	getGeometryDataEngineVersion() {
+		return this.#geometryDataEngineVersion;
+	}
 
-    getCapeId(){
-        return this.capeId;
-    }
+	getAnimationData() {
+		return this.animationData;
+	}
 
-    getFullSkinId(){
-        return this.fullSkinId;
-    }
+	getCapeId() {
+		return this.capeId;
+	}
 
-    getArmSize(){
-        return this.armSize;
-    }
+	getFullSkinId() {
+		return this.fullSkinId;
+	}
 
-    getSkinColor(){
-        return this.skinColor;
-    }
+	getArmSize() {
+		return this.armSize;
+	}
 
-    getPersonaPieces(){
-        return this.personaPieces;
-    }
+	getSkinColor() {
+		return this.skinColor;
+	}
 
-    getPieceTintColors(){
-        return this.pieceTintColors;
-    }
+	getPersonaPieces() {
+		return this.personaPieces;
+	}
 
-    isPersona(){
-        return this.persona;
-    }
+	getPieceTintColors() {
+		return this.pieceTintColors;
+	}
 
-    isPremium(){
-        return this.premium;
-    }
+	isPersona() {
+		return this.persona;
+	}
 
-    isPersonaCapeOnClassic(){
-        return this.personaCapeOnClassic;
-    }
+	isPremium() {
+		return this.premium;
+	}
 
-    isPrimaryUser(){
-        return this.isPrimaryUser_1;
-    }
+	isPersonaCapeOnClassic() {
+		return this.personaCapeOnClassic;
+	}
 
-    isVerified(){
-        return this.isVerified_1;
-    }
+	isPrimaryUser() {
+		return this.isPrimaryUser_1;
+	}
 
-    setVerified(verified){
-        this.isVerified_1 = verified;
-    }
+	isVerified() {
+		return this.isVerified_1;
+	}
+
+	setVerified(verified) {
+		this.isVerified_1 = verified;
+	}
 }
 
 module.exports = SkinData;

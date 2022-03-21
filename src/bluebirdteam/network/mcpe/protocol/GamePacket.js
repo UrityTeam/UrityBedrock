@@ -18,9 +18,10 @@ const assert = require("assert");
 const Zlib = require("zlib");
 const BinaryStream = require("../../NetworkBinaryStream");
 const PacketPool = require("./PacketPool");
+const Identifiers = require("./Identifiers");
 
 class GamePacket extends DataPacket {
-	static NETWORK_ID = 0xfe;
+	static NETWORK_ID = Identifiers.GAME_PACKET;
 
 	payload = new BinaryStream();
 
@@ -38,7 +39,10 @@ class GamePacket extends DataPacket {
 	decodePayload() {
 		let data = this.readRemaining();
 		try {
-			this.payload = new BinaryStream(Zlib.inflateRawSync(data, {level: this.compressionLevel, maxOutputLength: 1024 * 1024 * 2}));
+			this.payload = new BinaryStream(Zlib.inflateRawSync(data, {
+				level: this.compressionLevel,
+				maxOutputLength: 1024 * 1024 * 2
+			}));
 		} catch (e) {
 			//zlib decode error
 			this.payload = new BinaryStream();

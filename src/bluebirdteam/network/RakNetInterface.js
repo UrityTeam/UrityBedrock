@@ -37,7 +37,7 @@ class RakNetInterface {
 	constructor(server) {
 		PacketPool.init();
 		this.server = server;
-		this.bluebirdcfg = new Config("BlueBird.json", Config.JSON);
+		this.bluebirdcfg = new Config(server.path.data + "BlueBird.json", Config.JSON);
 		this.logger = new Logger();
 		this.raknet = new RakNetServer(new InternetAddress
 			(this.bluebirdcfg.getNested("address.name"),
@@ -49,15 +49,11 @@ class RakNetInterface {
 	}
 
 	queuePacket(player, packet, immediate) {
-		console.log("queue");
 		if (this.players.hasPlayer(player.address.toString())) {
-			console.log("hi");
 			if (!packet.isEncoded) {
 				packet.encode();
-				console.log("jlp");
 			}
 			if (packet instanceof GamePacket) {
-				console.log("queuea");
 				let frame = new Frame();
 				frame.reliability = ReliabilityTool.UNRELIABLE;
 				frame.isFragmented = false;
@@ -67,7 +63,6 @@ class RakNetInterface {
 					connection.addToQueue(frame);
 				}
 			} else {
-				console.log("queueppo");
 				this.server.broadcastGamePackets([player], [packet], true, immediate);
 			}
 		}

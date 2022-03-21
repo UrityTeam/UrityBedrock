@@ -76,12 +76,8 @@ class Server {
 			packets.forEach((packet) => pk.addPacket(packet));
 
 			if (!forceSync && !immediate) {
-				console.log(targets);
-				console.log("up haha")
 				this.broadcastPackets([pk], targets, false);
 			} else {
-				console.log(targets);
-				console.log("up haha -2")
 				this.broadcastPackets([pk], targets, immediate);
 			}
 		}
@@ -122,18 +118,15 @@ class Server {
 
 			if (immediate) {
 				targets.forEach(player => {
-					console.log("hdlsjankdsaasdka");
-					console.log(player);
 					if (this.raknet.players.has(player.address.toString())) {
-						console.log("hdlsjankdsa");
+						console.log(player);
 						this.raknet.players.getPlayer(player.address.toString()).sendDataPacket(pk, true);
 					}
 				});
 			} else {
 				targets.forEach(player => {
-					console.log("haajsd;a");
 					if (this.raknet.players.has(player.address.toString())) {
-						console.log("ay");
+						console.log(player);
 						this.raknet.players.getPlayer(player.address.toString()).sendDataPacket(pk);
 					}
 				});

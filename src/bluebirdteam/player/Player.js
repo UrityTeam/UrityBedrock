@@ -199,7 +199,6 @@ class Player extends Entity {
 				break;
 
 			case ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS:
-				console.log("rp_all")
 				let resource_pack_stack_packet = new ResourcePackStackPacket();
 				resource_pack_stack_packet.resourcePackStack = [];
 				resource_pack_stack_packet.mustAccept = false;
@@ -217,7 +216,6 @@ class Player extends Entity {
 				this.sendDataPacket(new CreativeContentPacket());
 
 				this.sendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
-				console.log("rp client");
 				break;
 		}
 		return true;

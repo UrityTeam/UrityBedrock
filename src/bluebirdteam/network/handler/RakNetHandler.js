@@ -51,7 +51,6 @@ class RakNetHandler {
         console.log(pk.offset);
         pk.decode();
         pk.handle(player.getNetworkSession());
-        console.log("packets")
     }
 }
 

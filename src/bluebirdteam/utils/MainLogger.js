@@ -17,7 +17,7 @@ const TextFormat = require("./TextFormat");
 const TimeStamp = require("time-stamp");
 
 class MainLogger {
-	debuggingLevel = 0;
+	#debuggingLevel = 0;
 
 	alert(message) {
 		return this.log("ALERT", message, TextFormat.AQUA);
@@ -48,12 +48,12 @@ class MainLogger {
 	}
 
 	debug(message) {
-		if (this.debuggingLevel < 1) return false;
+		if (this.isAcceptableForDebugging(1)) return false;
 		return this.log("DEBUG", message);
 	}
 
 	debugExtensive(message) {
-		if (this.debuggingLevel < 2) return false;
+		if (this.isAcceptableForDebugging(2)) return false;
 		return this.log("DEBUG", message);
 	}
 
@@ -64,7 +64,15 @@ class MainLogger {
 	}
 
 	setDebuggingLevel(level) {
-		this.debuggingLevel = level;
+		this.#debuggingLevel = level;
+	}
+
+	getDebuggingLevel() {
+		return this.#debuggingLevel;
+	}
+
+	isAcceptableForDebugging(v){
+		return this.#debuggingLevel >= v;
 	}
 }
 
