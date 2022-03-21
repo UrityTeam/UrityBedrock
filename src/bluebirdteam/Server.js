@@ -64,9 +64,9 @@ class Server {
 	 */
 	broadcastGamePackets(players, packets, forceSync = false, immediate = false) {
 		let targets = [];
-		players.forEach((player) => {
+		players.forEach(player => {
 			if (player.isConnected()) {
-				targets.push(this.raknet.players.getPlayerAddressAndPort(player.address));
+				targets.push(this.raknet.players.getPlayer(player.address.toString()));
 			}
 		});
 
@@ -76,8 +76,12 @@ class Server {
 			packets.forEach((packet) => pk.addPacket(packet));
 
 			if (!forceSync && !immediate) {
+				console.log(targets);
+				console.log("up haha")
 				this.broadcastPackets([pk], targets, false);
 			} else {
+				console.log(targets);
+				console.log("up haha -2")
 				this.broadcastPackets([pk], targets, immediate);
 			}
 		}
@@ -118,14 +122,19 @@ class Server {
 
 			if (immediate) {
 				targets.forEach(player => {
-					if (this.raknet.players.has(player)) {
-						this.raknet.players.getPlayer(player.address).sendDataPacket(pk, true);
+					console.log("hdlsjankdsaasdka");
+					console.log(player);
+					if (this.raknet.players.has(player.address.toString())) {
+						console.log("hdlsjankdsa");
+						this.raknet.players.getPlayer(player.address.toString()).sendDataPacket(pk, true);
 					}
 				});
 			} else {
 				targets.forEach(player => {
-					if (this.raknet.players.has(player)) {
-						this.raknet.players.getPlayer(player.address).sendDataPacket(pk);
+					console.log("haajsd;a");
+					if (this.raknet.players.has(player.address.toString())) {
+						console.log("ay");
+						this.raknet.players.getPlayer(player.address.toString()).sendDataPacket(pk);
 					}
 				});
 			}

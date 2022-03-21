@@ -40,13 +40,6 @@ class PlayerList extends Map {
 	/**
 	 * @param ip_port {String}
 	 */
-	getPlayerAddressAndPort(ip_port) {
-		return Array.from(this.keys())[Array.from(this.values()).indexOf(ip_port)];
-	}
-
-	/**
-	 * @param ip_port {String}
-	 */
 	removePlayer(ip_port) {
 		return this.delete(ip_port);
 	}

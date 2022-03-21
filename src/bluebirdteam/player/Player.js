@@ -271,7 +271,7 @@ class Player extends Entity {
 	}
 
 	handleText(packet) {
-		if (packet.type === Text.TYPE_CHAT) {
+		if (packet.type === TextPacket.TYPE_CHAT) {
 			let message = TextFormat.clean(packet.message);
 			message = message.split("\n");
 			for (let i in message) {
