@@ -1,0 +1,27 @@
+{
+  "name": "bluebird",
+  "version": "1.0.3",
+  "description": "A server software for Minecraft: Bedrock edition",
+  "main": "src/bluebirdteam/BlueBird.js",
+  "dependencies": {
+    "bbmc-binarystream": "git+https://github.com/BlueBirdMC/BinaryStream.git",
+    "bbmc-raknet": "git+https://github.com/BlueBirdMC/RakNet.git"
+  },
+  "author": "BlueBirdMC Team",
+  "license": "GNU-3.0",
+  "devDependencies": {
+    "time-stamp": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BlueBirdMC/BlueBird"
+  },
+  "keywords": [
+    "mcpe",
+    "mcpe server"
+  ],
+  "bugs": {
+    "url": "https://github.com/BlueBirdMC/BlueBird/issues"
+  },
+  "homepage": "https://github.com/BlueBirdMC/BlueBird"
+}

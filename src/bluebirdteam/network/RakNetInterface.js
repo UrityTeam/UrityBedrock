@@ -1,0 +1,104 @@
+/******************************************\
+ *  ____  _            ____  _         _  *
+ * | __ )| |_   _  ___| __ )(_)_ __ __| | *
+ * |  _ \| | | | |/ _ \  _ \| | '__/ _` | *
+ * | |_) | | |_| |  __/ |_) | | | | (_| | *
+ * |____/|_|\__,_|\___|____/|_|_|  \__,_| *
+ *                                        *
+ * This file is licensed under the GNU    *
+ * General Public License 3. To use or    *
+ * modify it you must accept the terms    *
+ * of the license.                        *
+ * ___________________________            *
+ * \ @author BlueBirdMC Team /            *
+\******************************************/
+
+const { RakNetServer, InternetAddress, Frame, ReliabilityTool } = require("bbmc-raknet");
+const GamePacket = require("./mcpe/protocol/GamePacket");
+const PlayerList = require("../player/PlayerList");
+const Logger = require("../utils/MainLogger");
+const PacketPool = require("./mcpe/protocol/PacketPool");
+const Config = require("../utils/Config");
+const BinaryStream = require("bbmc-binarystream");
+const RakNetHandler = require("./handler/RakNetHandler");
+
+class RakNetInterface {
+	/** @type MainLogger */
+	logger;
+	/** @type PlayerList */
+	players;
+	/** @type {RakNetServer, EventEmitter} */
+	raknet;
+	/** @type Config */
+	bluebirdcfg;
+	/** @type Server */
+	server;
+
+	constructor(server) {
+		PacketPool.init();
+		this.server = server;
+		this.bluebirdcfg = new Config("BlueBird.json", Config.JSON);
+		this.logger = new Logger();
+		this.raknet = new RakNetServer(new InternetAddress
+			(this.bluebirdcfg.getNested("address.name"),
+			this.bluebirdcfg.getNested("address.port"),
+			this.bluebirdcfg.getNested("address.ipv")),
+			10);
+		this.players = new PlayerList();
+		this.logger.setDebuggingLevel(this.bluebirdcfg.get("debug_level"));
+	}
+
+	queuePacket(player, packet, immediate) {
+		console.log("queue");
+		if (this.players.hasPlayer(player.address.toString())) {
+			console.log("hi");
+			if (!packet.isEncoded) {
+				packet.encode();
+				console.log("jlp");
+			}
+			if (packet instanceof GamePacket) {
+				console.log("queuea");
+				let frame = new Frame();
+				frame.reliability = ReliabilityTool.UNRELIABLE;
+				frame.isFragmented = false;
+				frame.stream = new BinaryStream(packet.buffer);
+				if (this.raknet.hasConnection(player.address)) {
+					let connection = this.raknet.getConnection(player.address);
+					connection.addToQueue(frame);
+				}
+			} else {
+				console.log("queueppo");
+				this.server.broadcastGamePackets([player], [packet], true, immediate);
+			}
+		}
+	}
+
+	handle() {
+		RakNetHandler.updatePong(this);
+
+		this.raknet.on('connect', (connection) => {
+			RakNetHandler.handlePlayerConnection(this, connection);
+		});
+
+		this.raknet.on('disconnect', (address) => {
+			RakNetHandler.handlePlayerDisconnection(this, address);
+		});
+
+		this.raknet.on('packet', (stream, connection) => {
+			RakNetHandler.handlePackets(this, stream, connection);
+		});
+	}
+
+	close(address) {
+		if (this.players.hasPlayer(address.toString()) && this.raknet.hasConnection(address)) {
+			this.players.removePlayer(address.toString());
+			this.raknet.removeConnection(address);
+		}
+	}
+
+	shutdown() {
+		this.raknet.isRunning = false;
+	}
+}
+
+module.exports = RakNetInterface;
