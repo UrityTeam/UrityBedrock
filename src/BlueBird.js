@@ -22,8 +22,8 @@ const Textformat = require("./utils/TextFormat");
 class BlueBird {
 	constructor() {
 		let path = {
-			file: Path.normalize(__dirname + "/../"),
-			data: Path.normalize(__dirname + "/../../"),
+			file: Path.normalize(__dirname + "/"),
+			data: Path.normalize(__dirname + "/../"),
 		};
 		this.server = new Server(path, Info.SOFTWARE_NAME, Info.SOFTWARE_VERSION);
 		this.readConsole();
