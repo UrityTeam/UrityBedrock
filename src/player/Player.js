@@ -216,8 +216,8 @@ class Player extends Entity {
 				this.sendDataPacket(start_game_packet);
 
 				this.sendDataPacket(new BiomeDefinitionListPacket());
-				// this.sendDataPacket(new AvailableActorIdentifiersPacket());
-				// this.sendDataPacket(new CreativeContentPacket());
+				this.sendDataPacket(new AvailableActorIdentifiersPacket());
+				this.sendDataPacket(new CreativeContentPacket());
 
 				this.sendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 				break;

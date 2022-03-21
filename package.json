@@ -29,16 +29,7 @@
   "bin": "start.js",
   "pkg": {
     "assests": [
-      "src/entity/**",
-      "src/utils/*****",
-      "src/network/****",
-      "src/network/handler/*",
-      "src/network/mcpe/*",
-      "src/network/mcpe/protocol/*******************",
-      "src/network/mcpe/protocol/types/*******",
-      "src/network/mcpe/protocol/resources/*",
-      "src/player/**",
-      "src/utils/*****"
+      "src/*************************************"
     ],
     "targets": [
       "node16"
