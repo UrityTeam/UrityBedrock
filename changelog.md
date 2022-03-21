@@ -1,3 +1,7 @@
+#### 1.0.4
+rewrite
+
+
 #### 1.0.3:
 **Warning:** you need to remove BlueBird.json file because more options added
 

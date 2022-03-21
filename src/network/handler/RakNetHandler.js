@@ -22,9 +22,6 @@ class RakNetHandler {
     static handlePlayerConnection(inter, connection){
         let player = new Player(inter.server, connection.address);
         inter.players.addPlayer(connection.address.toString(), player);
-        console.log(connection.address);
-        console.log(connection.address.toString());
-        console.log(inter.players.hasPlayer(connection.address.toString()));
     }
 
     static handlePlayerDisconnection(inter, address){
@@ -48,7 +45,6 @@ class RakNetHandler {
         let player = inter.players.getPlayer(connection.address.toString());
         let pk = new GamePacket();
         pk.buffer = stream.buffer;
-        console.log(pk.offset);
         pk.decode();
         pk.handle(player.getNetworkSession());
     }
