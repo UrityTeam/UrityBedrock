@@ -31,7 +31,7 @@ class Server {
 		this.path = path;
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
-		if (!fs.existsSync(this.path.data + "BlueBird.json")) {
+		if (!fs.existsSync("BlueBird.json")) {
 			let content = {
 				"motd": "BlueBird Server",
 				"address": {
@@ -43,9 +43,9 @@ class Server {
 				"debug_level": 0,
 				"xbox-auth": true
 			};
-			fs.writeFileSync(this.path.data + "BlueBird.json", JSON.stringify(content, null, 4));
+			fs.writeFileSync("BlueBird.json", JSON.stringify(content, null, 4));
 		}
-		this.bluebirdcfg = new Config(this.path.data + "BlueBird.json", Config.JSON);
+		this.bluebirdcfg = new Config("BlueBird.json", Config.JSON);
 		this.getLogger().info("This server is running " + sn + " v" + sv);
 		this.getLogger().info(sn + " is distributed under GPLv3 License");
 		this.raknet = new RakNetInterface(this);

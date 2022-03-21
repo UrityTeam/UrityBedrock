@@ -31,7 +31,7 @@ class AvailableActorIdentifiersPacket extends DataPacket {
 	}
 
 	encodePayload() {
-		let entity_identifiers = fs.readFileSync(Path.normalize(__dirname + "/../../../resources/entity_identifiers.nbt"));
+		let entity_identifiers = fs.readFileSync(Path.normalize(__dirname + "/resources/entity_identifiers.nbt"));
 		let content = Utils.base64_encode(entity_identifiers.toString("utf8"));
 		this.write(this.namedtag ? this.namedtag : Buffer.from(content, "base64"));
 	}

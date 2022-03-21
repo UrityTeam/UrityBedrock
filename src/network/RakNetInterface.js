@@ -37,7 +37,7 @@ class RakNetInterface {
 	constructor(server) {
 		PacketPool.init();
 		this.server = server;
-		this.bluebirdcfg = new Config(server.path.data + "BlueBird.json", Config.JSON);
+		this.bluebirdcfg = new Config("BlueBird.json", Config.JSON);
 		this.logger = new Logger();
 		this.raknet = new RakNetServer(new InternetAddress
 			(this.bluebirdcfg.getNested("address.name"),

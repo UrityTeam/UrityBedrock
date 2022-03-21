@@ -45,7 +45,7 @@ class PacketPool {
 		this.registerPacket(SetTitlePacket);
 		this.registerPacket(DisconnectPacket);
 		this.registerPacket(SetLocalPlayerAsInitializedPacket);
-		this.registerPacket(AvailableActorIdentifiersPacket);
+		// this.registerPacket(AvailableActorIdentifiersPacket);
 		// this.registerPacket(PlayerSkinPacket);
 	}
 
