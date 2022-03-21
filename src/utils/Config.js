@@ -20,6 +20,11 @@ class Config {
 	static DETECT = 0;
 	static JSON = 1;
 
+	correct;
+	file;
+	type;
+	config;
+
 	/**
 	 * @param file {String}
 	 * @param type {Number}

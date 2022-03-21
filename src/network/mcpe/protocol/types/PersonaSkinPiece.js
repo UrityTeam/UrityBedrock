@@ -26,13 +26,9 @@ class PersonaSkinPiece {
 	static PIECE_TYPE_PERSONA_TOP = "persona_top";
 
 	#pieceId;
-
 	#pieceType;
-
 	#packId;
-
 	#isDefaultPiece;
-
 	#productId;
 
 	constructor(pieceId, pieceType, packId, isDefaultPiece, productId) {

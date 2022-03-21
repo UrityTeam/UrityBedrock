@@ -19,7 +19,6 @@ class PersonaPieceTintColor {
 	static PIECE_TYPE_PERSONA_MOUTH = "persona_mouth";
 
 	#pieceType;
-
 	#colors;
 
 	constructor(pieceType, colors) {

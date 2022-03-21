@@ -27,7 +27,7 @@ Added /reportbug
 
 Fixed console spam
 
-Added onlinemode to config
+Added xbox-auth to config
 
 Added more checks
 

@@ -17,14 +17,15 @@ const DataPacket = require("./protocol/DataPacket");
 const SkinAdapterSingleton = require("./protocol/types/SkinAdapterSingleton");
 
 class PlayerNetworkSession {
+	server;
+	player;
+
 	/**
 	 * @param player {Player}
 	 */
 	constructor(player) {
 		/** @type {Server} */
 		this.server = player.server;
-		/** @type {RakNetInterface} */
-		this.raknetAdapter = player.server.raknet;
 		/** @type {Player} */
 		this.player = player;
 	}

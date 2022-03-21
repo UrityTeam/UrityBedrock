@@ -48,13 +48,13 @@ class MainLogger {
 	}
 
 	debug(message) {
-		if (this.isAcceptableForDebugging(1)) return false;
-		return this.log("DEBUG", message);
+		if (this.#debuggingLevel < 1) return false;
+		return this.log("DEBUG", message, TextFormat.GRAY);
 	}
 
 	debugExtensive(message) {
-		if (this.isAcceptableForDebugging(2)) return false;
-		return this.log("DEBUG", message);
+		if (this.#debuggingLevel < 2) return false;
+		return this.log("DEBUG", message, TextFormat.GRAY);
 	}
 
 	log(type, message, color = TextFormat.GRAY) {
@@ -69,10 +69,6 @@ class MainLogger {
 
 	getDebuggingLevel() {
 		return this.#debuggingLevel;
-	}
-
-	isAcceptableForDebugging(v){
-		return this.#debuggingLevel >= v;
 	}
 }
 

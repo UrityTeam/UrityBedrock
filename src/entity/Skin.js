@@ -22,13 +22,9 @@ class Skin {
     ];
 
     #skinId;
-
     #skinData;
-
     #capeData;
-
     #geometryName;
-
     #geometryData;
 
     constructor(skinId, skinData, capeData = "", geometryName = "", geometryData = "") {

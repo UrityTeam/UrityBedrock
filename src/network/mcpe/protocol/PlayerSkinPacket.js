@@ -20,11 +20,8 @@ class PlayerSkinPacket extends DataPacket {
 	static NETWORK_ID = Identifiers.PLAYER_SKIN_PACKET;
 
 	uuid;
-
 	oldSkinName;
-
 	newSkinName;
-
 	skin;
 
 	decodePayload() {

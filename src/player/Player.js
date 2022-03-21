@@ -48,6 +48,9 @@ class Player extends Entity {
 	uuid;
 	address;
 	networkSession;
+	xuid;
+	clientId;
+	authorized;
 
 	constructor(server, address) {
 		super();
@@ -104,14 +107,15 @@ class Player extends Entity {
 		}
 
 		this.username = TextFormat.clean(packet.username);
+		this.clientId = packet.clientId;
 
 		if (packet.locale !== null) {
 			this.locale = packet.locale;
 		}
 
-		/*this.uuid = UUID.fromString(packet.clientUUID);
+		this.uuid = UUID.fromString(packet.clientUUID);
 
-		let animations = [];
+		/*let animations = [];
 
 		packet.clientData["AnimatedImageData"].forEach(animation => {
 			animations.push(new SkinAnimation(
@@ -228,12 +232,15 @@ class Player extends Entity {
 		}
 
 		let xuid = packet.xuid;
+		let cfg = new Config("BlueBird.json", Config.JSON);
 
 		if (!signedByMojang && xuid !== "") {
 			this.server.getLogger().info(this.username + " has an XUID, but their login keychain is not signed by Mojang");
-			if (new Config("BlueBird.json", Config.JSON).get("onlinemode") === true) {
+			this.authorized = false;
+			if (cfg.get("xbox-auth") === true) {
 				this.server.getLogger().debug(this.username + " is not logged into Xbox Live");
-				this.close("To join this server you must login to your Xbox account");
+				this.close("To join this server you must login to your xbox account");
+				return;
 			}
 			xuid = "";
 		}
@@ -245,14 +252,19 @@ class Player extends Entity {
 		if (xuid === "" || !xuid instanceof String) {
 			if (signedByMojang) {
 				this.server.getLogger().warning(this.username + " tried to join without XUID");
-				if (new Config("BlueBird.json", Config.JSON).get("onlinemode") === true) {
-					this.close("To join this server you must login to your Xbox account");
+				this.authorized = false;
+				if (cfg.get("xbox-auth") === true) {
+					this.close("To join this server you must login to your xbox account");
+					return;
 				}
 			}
 			this.server.getLogger().debug(this.username + " is not logged into Xbox Live");
 		} else {
+			this.authorized = true;
 			this.server.getLogger().debug(this.username + " is logged into Xbox Live");
 		}
+
+		this.xuid = xuid;
 
 		this.loggedIn = true;
 
@@ -265,7 +277,7 @@ class Player extends Entity {
 		this.sendDataPacket(packsInfo);
 
 		this.server.getLogger().info("Player " + this.username + " joined the game");
-		this.server.broadcastMessage("§6Player " + this.username + " joined the game");
+		this.server.broadcastMessage("§ePlayer " + this.username + " joined the game");
 	}
 
 	handleText(packet) {
@@ -345,12 +357,28 @@ class Player extends Entity {
 
 	close(reason, hide_disconnection_screen = false) {
 		this.server.getLogger().info("Player " + this.username + " disconnected due to " + reason);
-		this.server.broadcastMessage("§6Player " + this.username + " left the game");
+		this.server.broadcastMessage("§ePlayer " + this.username + " left the game");
 		let pk = new DisconnectPacket();
 		pk.hideDisconnectionScreen = hide_disconnection_screen;
 		pk.message = reason;
 		this.sendDataPacket(pk);
 		this.server.raknet.close(this.address);
+	}
+
+	getXuid() {
+		return this.xuid;
+	}
+
+	getClientId() {
+		return this.clientId;
+	}
+
+	isAuthorized() {
+		return this.authorized;
+	}
+
+	getUUID() {
+		return this.uuid;
 	}
 
 	getName() {

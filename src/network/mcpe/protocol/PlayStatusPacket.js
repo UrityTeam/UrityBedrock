@@ -19,9 +19,6 @@ const Identifiers = require("./Identifiers");
 class PlayStatusPacket extends DataPacket {
 	static NETWORK_ID = Identifiers.PLAY_STATUS_PACKET;
 
-	/** @type {number} */
-	status;
-
 	static LOGIN_SUCCESS = 0;
 
 	static LOGIN_FAILED_CLIENT = 1;
@@ -35,6 +32,9 @@ class PlayStatusPacket extends DataPacket {
 	static LOGIN_FAILED_VANILLA_EDU = 5;
 
 	static LOGIN_FAILED_EDU_VANILLA = 6;
+
+	/** @type {number} */
+	status;
 
 	canBeSentBeforeLogin = true;
 

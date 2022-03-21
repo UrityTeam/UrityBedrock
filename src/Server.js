@@ -41,7 +41,7 @@ class Server {
 				},
 				"maxplayers": 20,
 				"debug_level": 0,
-				"onlinemode": true
+				"xbox-auth": true
 			};
 			fs.writeFileSync(this.path.data + "BlueBird.json", JSON.stringify(content, null, 4));
 		}
@@ -119,14 +119,12 @@ class Server {
 			if (immediate) {
 				targets.forEach(player => {
 					if (this.raknet.players.has(player.address.toString())) {
-						// console.log(player);
 						player.sendDataPacket(pk, true);
 					}
 				});
 			} else {
 				targets.forEach(player => {
 					if (this.raknet.players.has(player.address.toString())) {
-						// console.log(player);
 						player.sendDataPacket(pk);
 					}
 				});

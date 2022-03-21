@@ -30,17 +30,11 @@ class SetTitlePacket extends DataPacket {
 	static TYPE_SET_ACTIONBAR_MESSAGE_JSON = 8;
 
 	type;
-
 	text = "";
-
 	fadeInTime = 0;
-
 	stayTime = 0;
-
 	fadeOutTime = 0;
-
 	xuid = "";
-
 	platformOnlineId = "";
 
 	decodePayload() {
