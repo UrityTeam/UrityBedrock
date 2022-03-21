@@ -4,7 +4,6 @@
   "description": "A server software for Minecraft: Bedrock edition",
   "main": "src/BlueBird.js",
   "scripts": {
-    "run": "node start.js",
     "test": "node start.js"
   },
   "dependencies": {

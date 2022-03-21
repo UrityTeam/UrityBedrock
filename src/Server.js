@@ -119,15 +119,15 @@ class Server {
 			if (immediate) {
 				targets.forEach(player => {
 					if (this.raknet.players.has(player.address.toString())) {
-						console.log(player);
-						this.raknet.players.getPlayer(player.address.toString()).sendDataPacket(pk, true);
+						// console.log(player);
+						player.sendDataPacket(pk, true);
 					}
 				});
 			} else {
 				targets.forEach(player => {
 					if (this.raknet.players.has(player.address.toString())) {
-						console.log(player);
-						this.raknet.players.getPlayer(player.address.toString()).sendDataPacket(pk);
+						// console.log(player);
+						player.sendDataPacket(pk);
 					}
 				});
 			}

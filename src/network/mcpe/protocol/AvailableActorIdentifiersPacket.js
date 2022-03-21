@@ -16,6 +16,8 @@
 const DataPacket = require("./DataPacket");
 const Identifiers = require("./Identifiers");
 const fs = require("fs");
+const BlueBird = require("../../../BlueBird");
+const Utils = require("../../../utils/Utils");
 const Path = require("path");
 
 class AvailableActorIdentifiersPacket extends DataPacket {
@@ -29,7 +31,9 @@ class AvailableActorIdentifiersPacket extends DataPacket {
 	}
 
 	encodePayload() {
-		this.write(this.namedtag ? this.namedtag : Buffer.from(fs.readFileSync(Path.normalize(__dirname + "/../../../resources/entity_identifiers.nbt")), "base64"));
+		let entity_identifiers = fs.readFileSync(Path.normalize(__dirname + "/../../../resources/entity_identifiers.nbt"));
+		let content = Utils.base64_encode(entity_identifiers.toString("utf8"));
+		this.write(this.namedtag ? this.namedtag : Buffer.from(content, "base64"));
 	}
 }
 
