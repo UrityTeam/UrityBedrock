@@ -28,9 +28,9 @@ class Server {
 	constructor(path, sn, sv) {
 		let start_time = Date.now();
 		this.logger = new Logger();
+		this.path = path;
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
-		this.path = path;
 		if (!fs.existsSync(this.path.data + "BlueBird.json")) {
 			let content = {
 				"motd": "BlueBird Server",
@@ -47,13 +47,13 @@ class Server {
 		}
 		this.bluebirdcfg = new Config(this.path.data + "BlueBird.json", Config.JSON);
 		this.getLogger().info("This server is running " + sn + " v" + sv);
-		this.getLogger().info("BlueBird is distributed under GPLv3 License");
+		this.getLogger().info(sn + " is distributed under GPLv3 License");
 		this.raknet = new RakNetInterface(this);
 		if (this.raknet.raknet.isRunning === true) {
 			this.raknet.handle();
 		}
 		this.getLogger().info("Server listened on " + this.bluebirdcfg.getNested("address.name") + ":" + this.bluebirdcfg.getNested("address.port"));
-		this.getLogger().info("Done in (" + (Date.now() - start_time) + "ms).");
+		this.getLogger().info("Done in (" + (Date.now() - start_time).toFixed(1) + "ms).");
 	}
 
 	/**
