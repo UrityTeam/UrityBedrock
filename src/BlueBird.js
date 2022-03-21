@@ -20,6 +20,8 @@ const readline = require("readline");
 const Textformat = require("./utils/TextFormat");
 
 class BlueBird {
+	server;
+
 	constructor() {
 		let path = {
 			file: Path.normalize(__dirname + "/"),

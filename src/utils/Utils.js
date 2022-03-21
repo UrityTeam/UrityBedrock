@@ -20,14 +20,14 @@ class Utils {
 		return JSON.parse(Utils.base64_decode(payloadB64.replace(/-/g, "+").replace(/_/g, "/"), true));
 	}
 
-	static base64_decode = function (str, strict) {
+	static base64_decode(str, strict) {
 		let characters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "/", "=",];
-		let yes = true;
+		let valid_character = true;
 		for (let i = 0; i < str.length; i++) {
-			if (characters.indexOf(str[i]) === -1) yes = false;
+			if (characters.indexOf(str[i]) === -1) valid_character = false;
 		}
 		if (strict === true) {
-			if (yes === true) {
+			if (valid_character === true) {
 				return Buffer.from(str, "base64").toString("binary");
 			} else {
 				return false;
@@ -36,7 +36,7 @@ class Utils {
 		return Buffer.from(str, "base64").toString("binary");
 	}
 
-	static base64_encode = function (str) {
+	static base64_encode(str) {
 		return Buffer.from(str).toString("base64");
 	}
 }

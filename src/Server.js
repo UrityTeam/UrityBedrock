@@ -20,10 +20,10 @@ const Logger = require("./utils/MainLogger");
 const fs = require("fs");
 
 class Server {
-	/** @type Logger */
 	logger;
-	/** @type RakNetInterface */
 	raknet;
+	path;
+	bluebirdcfg;
 
 	constructor(path, sn, sv) {
 		let start_time = Date.now();
