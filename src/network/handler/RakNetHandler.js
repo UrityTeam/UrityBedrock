@@ -14,7 +14,7 @@
 \******************************************/
 
 const Player = require("../../player/Player");
-const ProtocolInfo = require("../mcpe/protocol/Identifiers");
+const Identifiers = require("../mcpe/protocol/Identifiers");
 const GamePacket = require("../mcpe/protocol/GamePacket");
 
 class RakNetHandler {
@@ -34,7 +34,7 @@ class RakNetHandler {
     static updatePong(inter){
         let interval = setInterval(() => {
             if(inter.raknet.isRunning === true){
-                inter.raknet.message = "MCPE;" + inter.bluebirdcfg.get("motd") + ";" + ProtocolInfo.CURRENT_PROTOCOL + ";" + ProtocolInfo.MINECRAFT_VERSION + ";" + inter.server.getOnlinePlayers().length + ";" + inter.bluebirdcfg.get("maxplayers") + ";" + inter.raknet.serverGUID.toString() + ";";
+                inter.raknet.message = "MCPE;" + inter.bluebirdcfg.get("motd") + ";" + Identifiers.CURRENT_PROTOCOL + ";" + Identifiers.MINECRAFT_VERSION + ";" + inter.server.getOnlinePlayers().length + ";" + inter.bluebirdcfg.get("maxplayers") + ";" + inter.raknet.serverGUID.toString() + ";";
             }else{
                 clearInterval(interval);
             }
