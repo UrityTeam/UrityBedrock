@@ -14,10 +14,10 @@
 \******************************************/
 
 const DataPacket = require("./DataPacket");
-const ProtocolInfo = require("./Identifiers");
+const Identifiers = require("./Identifiers");
 
 class StartGamePacket extends DataPacket {
-	static NETWORK_ID = ProtocolInfo.START_GAME_PACKET;
+	static NETWORK_ID = Identifiers.START_GAME_PACKET;
 
 	canBeSentBeforeLogin = true;
 
@@ -74,7 +74,7 @@ class StartGamePacket extends DataPacket {
 		this.writeBool(false); // Is from world template
 		this.writeBool(false); // Is world template option locked
 		this.writeBool(false); // Only spawn v1 villagers
-		this.writeString(ProtocolInfo.MINECRAFT_VERSION); // Game version
+		this.writeString(Identifiers.MINECRAFT_VERSION); // Game version
 		this.writeIntLE(0); // Limited world width
 		this.writeIntLE(0); // Limited world length
 		this.writeBool(true); // Is new nether
