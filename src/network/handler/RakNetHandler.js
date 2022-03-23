@@ -26,7 +26,6 @@ class RakNetHandler {
 
     static handlePlayerDisconnection(inter, address){
         if (inter.players.hasPlayer(address.toString())) {
-            inter.players.getPlayer(address.toString()).close('client disconnect', true);
             inter.players.removePlayer(address.toString());
         }
     }
