@@ -363,7 +363,7 @@ class Player extends Entity {
 		pk.hideDisconnectionScreen = hide_disconnection_screen;
 		pk.message = reason;
 		this.sendDataPacket(pk);
-		this.server.raknet.close(this.address);
+		this.connection.disconnect(reason);
 	}
 
 	getXuid() {
