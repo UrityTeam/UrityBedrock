@@ -15,7 +15,6 @@
 
 class Skin {
     static ACCEPTED_SKIN_SIZES = [
-        4102,
         64 * 32 * 4,
         64 * 64 * 4,
         128 * 128 * 4
@@ -51,22 +50,30 @@ class Skin {
     }
 
     validate() {
-        Skin.checkLength(this.#skinId, "Skin ID", 32767);
-        Skin.checkLength(this.#geometryName, "Geometry name", 32767);
-        Skin.checkLength(this.#geometryData, "Geometry data", 0x7fffffff);
+        Skin.checkLength(this.#skinId, "Skin ID", 0x7fff);
+        Skin.checkLength(this.#geometryName, "Geometry name", 0x7fff);
+        Skin.checkLength(this.#geometryData, "Geometry data", Number.MAX_SAFE_INTEGER);
 
         if(!this.#skinId) {
             throw new Error("Skin id must not be empty");
         }
 
         let length = this.#skinData.length;
-
         if(Skin.ACCEPTED_SKIN_SIZES.includes(length) === false) {
             throw new Error(`Invalid skin data size ${length} bytes (allowed sizes: ${Skin.ACCEPTED_SKIN_SIZES.join(', ')})`);
         }
 
         if(this.#capeData !== "" && this.#capeData.length !== 8192) {
             throw new Error("Invalid cape data size " + this.#capeData.length + " bytes (must be exactly 8192 bytes)");
+        }
+
+        if(this.#geometryData !== ""){
+            let decodedGeometry = JSON.stringify(JSON.parse(this.#geometryData));
+            if(decodedGeometry === false){
+                throw new Error("Invalid geometry data");
+            }
+
+            this.#geometryData = JSON.parse(decodedGeometry);
         }
     }
 
@@ -93,12 +100,6 @@ class Skin {
     /** @return {String} */
     getGeometryData() {
         return this.#geometryData;
-    }
-
-    debloatGeometryData() {
-        if (this.#geometryData !== "") {
-            this.#geometryData = JSON.stringify(JSON.parse(this.#geometryData));
-        }
     }
 }
 

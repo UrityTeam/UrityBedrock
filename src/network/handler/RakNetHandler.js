@@ -20,7 +20,7 @@ const GamePacket = require("../mcpe/protocol/GamePacket");
 class RakNetHandler {
 
     static handlePlayerConnection(inter, connection){
-        let player = new Player(inter.server, connection.address);
+        let player = new Player(inter.server, connection);
         inter.players.addPlayer(connection.address.toString(), player);
     }
 

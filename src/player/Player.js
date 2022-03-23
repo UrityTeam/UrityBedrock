@@ -51,11 +51,13 @@ class Player extends Entity {
 	xuid;
 	clientId;
 	authorized;
+	connection;
 
-	constructor(server, address) {
+	constructor(server, connection) {
 		super();
 		this.server = server;
-		this.address = address;
+		this.address = connection.address;
+		this.connection = connection;
 		this.networkSession = new PlayerNetworkSession(this);
 	}
 
@@ -91,7 +93,6 @@ class Player extends Entity {
 	setSkin(skin) {
 		skin.validate();
 		this.skin = skin;
-		this.skin.debloatGeometryData();
 	}
 
 	handleLogin(packet) {

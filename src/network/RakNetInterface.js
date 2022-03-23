@@ -58,10 +58,7 @@ class RakNetInterface {
 				frame.reliability = ReliabilityTool.UNRELIABLE;
 				frame.isFragmented = false;
 				frame.stream = new BinaryStream(packet.buffer);
-				if (this.raknet.hasConnection(player.address)) {
-					let connection = this.raknet.getConnection(player.address);
-					connection.addToQueue(frame);
-				}
+				player.connection.addToQueue(frame);
 			} else {
 				this.server.broadcastGamePackets([player], [packet], true, immediate);
 			}
