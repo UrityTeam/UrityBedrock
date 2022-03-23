@@ -81,11 +81,8 @@ class RakNetInterface {
 		});
 	}
 
-	close(address) {
-		if (this.players.hasPlayer(address.toString()) && this.raknet.hasConnection(address)) {
-			this.players.removePlayer(address.toString());
-			this.raknet.removeConnection(address);
-		}
+	close(address, reason) {
+		inter.players.getPlayer(address.toString()).disconnect(reason);
 	}
 
 	shutdown() {
