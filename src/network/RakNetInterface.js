@@ -82,7 +82,9 @@ class RakNetInterface {
 	}
 
 	close(address, reason) {
-		inter.players.getPlayer(address.toString()).disconnect(reason);
+		if (this.players.hasPlayer(address.toString())) {
+			inter.players.getPlayer(address.toString()).disconnect(reason);
+		}
 	}
 
 	shutdown() {
