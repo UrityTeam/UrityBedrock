@@ -14,7 +14,6 @@
 \******************************************/
 
 const TextFormat = require("./TextFormat");
-const TimeStamp = require("time-stamp");
 
 class MainLogger {
 	#debuggingLevel = 0;
@@ -60,7 +59,9 @@ class MainLogger {
 	log(type, message, color = TextFormat.GRAY) {
 		color = TextFormat.toTerminal(color);
 		message = TextFormat.toTerminal(message);
-		console.log(TextFormat.toTerminal(TextFormat.BLUE) + "[" + TimeStamp("HH:mm:ss") + "]" + TextFormat.toTerminal(TextFormat.RESET) + " " + color + type + " >", message + TextFormat.toTerminal(TextFormat.RESET));
+		let date = new Date();
+		let timeString = date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString();
+		console.log(TextFormat.toTerminal(TextFormat.BLUE) + "[" + timeString + "]" + TextFormat.toTerminal(TextFormat.RESET) + " " + color + type + " >", message + TextFormat.toTerminal(TextFormat.RESET));
 	}
 
 	setDebuggingLevel(level) {
