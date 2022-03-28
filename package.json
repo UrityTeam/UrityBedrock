@@ -12,9 +12,6 @@
   },
   "author": "BlueBirdMC Team",
   "license": "GPL-3.0",
-  "devDependencies": {
-    "time-stamp": "^2.2.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/BlueBirdMC/BlueBird"
