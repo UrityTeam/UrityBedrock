@@ -11,7 +11,7 @@
     "bbmc-raknet": "git+https://github.com/BlueBirdMC/RakNet.git"
   },
   "author": "BlueBirdMC Team",
-  "license": "GNU-3.0",
+  "license": "GPL-3.0",
   "devDependencies": {
     "time-stamp": "^2.2.0"
   },
