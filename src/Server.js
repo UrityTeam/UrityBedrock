@@ -37,7 +37,7 @@ class Server {
 				"address": {
 					"name": "0.0.0.0",
 					"port": 19132,
-					"ipv": 4,
+					"version": 4,
 				},
 				"maxplayers": 20,
 				"debug_level": 0,
