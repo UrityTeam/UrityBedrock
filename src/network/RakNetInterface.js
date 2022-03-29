@@ -42,7 +42,7 @@ class RakNetInterface {
 		this.raknet = new RakNetServer(new InternetAddress
 			(this.bluebirdcfg.getNested("address.name"),
 			this.bluebirdcfg.getNested("address.port"),
-			this.bluebirdcfg.getNested("address.ipv")),
+			this.bluebirdcfg.getNested("address.version")),
 			10);
 		this.players = new PlayerList();
 		this.logger.setDebuggingLevel(this.bluebirdcfg.get("debug_level"));
