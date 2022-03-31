@@ -23,14 +23,5 @@
   "bugs": {
     "url": "https://github.com/BlueBirdMC/BlueBird/issues"
   },
-  "bin": "start.js",
-  "pkg": {
-    "assests": [
-      "src/*************************************"
-    ],
-    "targets": [
-      "node16"
-    ]
-  },
   "homepage": "https://github.com/BlueBirdMC/BlueBird"
 }
