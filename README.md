@@ -1,3 +1,4 @@
+## Discord
 https://discord.gg/KQCYsxAD2b
 
 ## Picture
@@ -5,11 +6,8 @@ https://discord.gg/KQCYsxAD2b
 
 ## How to use
 > ### **Linux**
-> 
-> sudo apt update && apt install nodejs && npm install && node start.js
-
 > ### **Windows**
-> 
-> npm install && npm install -g pkg && npx pkg .
-> 
-> then start the bluebird.exe
+>
+> You should have NodeJS installed
+>
+> npm install && node start.js
