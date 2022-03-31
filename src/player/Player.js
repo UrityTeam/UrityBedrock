@@ -289,7 +289,7 @@ class Player extends Entity {
 				let messageElement = message[i];
 				if (messageElement.trim() !== "" && messageElement.length <= 255) {
 					if (messageElement.startsWith("/")) {
-						//TODO: Add player commands
+						//TODO: Send Commands Packet
 						return false;
 					}
 					let msg = "<:player> :message".replace(":player", this.getName()).replace(":message", messageElement);
