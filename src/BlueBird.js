@@ -21,11 +21,7 @@ class BlueBird {
 	server;
 
 	constructor() {
-		let path = {
-			file: Path.normalize(__dirname + "/"),
-			data: Path.normalize(__dirname + "/../")
-		};
-		this.server = new Server(path, Info.SOFTWARE_NAME, Info.SOFTWARE_VERSION);
+		this.server = new Server(Path.normalize(__dirname + "/../"), Info.SOFTWARE_NAME, Info.SOFTWARE_VERSION);
 	}
 }
 

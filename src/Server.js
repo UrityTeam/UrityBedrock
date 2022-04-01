@@ -22,13 +22,13 @@ const fs = require("fs");
 class Server {
 	logger;
 	raknet;
-	path;
+	dataPath;
 	bluebirdcfg;
 
-	constructor(path, sn, sv) {
+	constructor(dataPath, sn, sv) {
 		let start_time = Date.now();
 		this.logger = new Logger();
-		this.path = path;
+		this.dataPath = dataPath;
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
 		if (!fs.existsSync("BlueBird.json")) {
