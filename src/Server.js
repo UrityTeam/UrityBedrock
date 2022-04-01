@@ -151,19 +151,11 @@ class Server {
 				pk.encode();
 			}
 
-			if (immediate) {
-				targets.forEach(player => {
-					if (player.address.toString() in this.raknet.players) {
-						player.sendDataPacket(pk, true);
-					}
-				});
-			} else {
-				targets.forEach(player => {
-					if (player.address.toString() in this.raknet.players) {
-						player.sendDataPacket(pk);
-					}
-				});
-			}
+			targets.forEach(player => {
+				if (player.address.toString() in this.raknet.players) {
+					player.sendDataPacket(pk, immediate);
+				}
+			});
 		});
 	}
 
