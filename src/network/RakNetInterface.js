@@ -15,7 +15,6 @@
 
 const { RakNetServer, InternetAddress, Frame, ReliabilityTool } = require("bbmc-raknet");
 const GamePacket = require("./mcpe/protocol/GamePacket");
-const PlayerList = require("../player/PlayerList");
 const Logger = require("../utils/MainLogger");
 const PacketPool = require("./mcpe/protocol/PacketPool");
 const Config = require("../utils/Config");
@@ -34,6 +33,8 @@ class RakNetInterface {
 	/** @type Server */
 	server;
 
+	players = {};
+
 	constructor(server) {
 		PacketPool.init();
 		this.server = server;
@@ -44,12 +45,11 @@ class RakNetInterface {
 			this.bluebirdcfg.getNested("address.port"),
 			this.bluebirdcfg.getNested("address.version")),
 			10);
-		this.players = new PlayerList();
 		this.logger.setDebuggingLevel(this.bluebirdcfg.get("debug_level"));
 	}
 
 	queuePacket(player, packet, immediate) {
-		if (this.players.hasPlayer(player.address.toString())) {
+		if (player.address.toString() in this.players) {
 			if (!packet.isEncoded) {
 				packet.encode();
 			}
@@ -82,8 +82,8 @@ class RakNetInterface {
 	}
 
 	close(address, reason) {
-		if (this.players.hasPlayer(address.toString())) {
-			this.players.getPlayer(address.toString()).disconnect(reason);
+		if (address.toString() in this.players) {
+			this.players[address.toString()].disconnect(reason);
 		}
 	}
 

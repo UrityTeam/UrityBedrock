@@ -13,31 +13,31 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const PlayerNetworkSession = require("../network/mcpe/PlayerNetworkSession");
-const ProtocolInfo = require("../network/mcpe/protocol/Identifiers");
-const PlayStatusPacket = require("../network/mcpe/protocol/PlayStatusPacket");
-const StartGamePacket = require("../network/mcpe/protocol/StartGamePacket");
-const ResourcePackClientResponsePacket = require("../network/mcpe/protocol/ResourcePackClientResponsePacket");
-const ResourcePackStackPacket = require("../network/mcpe/protocol/ResourcePackStackPacket");
-const TextFormat = require("../utils/TextFormat");
-const ResourcePacksInfoPacket = require("../network/mcpe/protocol/ResourcePacksInfoPacket");
-const BiomeDefinitionListPacket = require("../network/mcpe/protocol/BiomeDefinitionListPacket");
-const CreativeContentPacket = require("../network/mcpe/protocol/CreativeContentPacket");
-const TextPacket = require("../network/mcpe/protocol/TextPacket");
-const SetTitlePacket = require("../network/mcpe/protocol/SetTitlePacket");
-const DisconnectPacket = require("../network/mcpe/protocol/DisconnectPacket");
-const Config = require("../utils/Config");
-const PlayerSkinPacket = require("../network/mcpe/protocol/PlayerSkinPacket");
-const UUID = require("../utils/UUID");
-const SkinAdapterSingleton = require("../network/mcpe/protocol/types/SkinAdapterSingleton");
-const SkinImage = require("../network/mcpe/protocol/types/SkinImage");
-const SkinAnimation = require("../network/mcpe/protocol/types/SkinAnimation");
-const PersonaSkinPiece = require("../network/mcpe/protocol/types/PersonaSkinPiece");
-const PersonaPieceTintColor = require("../network/mcpe/protocol/types/PersonaPieceTintColor");
-const SkinData = require("../network/mcpe/protocol/types/SkinData");
-const Entity = require("../entity/Entity");
-const AvailableActorIdentifiersPacket = require("../network/mcpe/protocol/AvailableActorIdentifiersPacket");
-const Utils = require("../utils/Utils");
+const PlayerNetworkSession = require("./network/mcpe/PlayerNetworkSession");
+const ProtocolInfo = require("./network/mcpe/protocol/Identifiers");
+const PlayStatusPacket = require("./network/mcpe/protocol/PlayStatusPacket");
+const StartGamePacket = require("./network/mcpe/protocol/StartGamePacket");
+const ResourcePackClientResponsePacket = require("./network/mcpe/protocol/ResourcePackClientResponsePacket");
+const ResourcePackStackPacket = require("./network/mcpe/protocol/ResourcePackStackPacket");
+const TextFormat = require("./utils/TextFormat");
+const ResourcePacksInfoPacket = require("./network/mcpe/protocol/ResourcePacksInfoPacket");
+const BiomeDefinitionListPacket = require("./network/mcpe/protocol/BiomeDefinitionListPacket");
+const CreativeContentPacket = require("./network/mcpe/protocol/CreativeContentPacket");
+const TextPacket = require("./network/mcpe/protocol/TextPacket");
+const SetTitlePacket = require("./network/mcpe/protocol/SetTitlePacket");
+const DisconnectPacket = require("./network/mcpe/protocol/DisconnectPacket");
+const Config = require("./utils/Config");
+const PlayerSkinPacket = require("./network/mcpe/protocol/PlayerSkinPacket");
+const UUID = require("./utils/UUID");
+const SkinAdapterSingleton = require("./network/mcpe/protocol/types/SkinAdapterSingleton");
+const SkinImage = require("./network/mcpe/protocol/types/SkinImage");
+const SkinAnimation = require("./network/mcpe/protocol/types/SkinAnimation");
+const PersonaSkinPiece = require("./network/mcpe/protocol/types/PersonaSkinPiece");
+const PersonaPieceTintColor = require("./network/mcpe/protocol/types/PersonaPieceTintColor");
+const SkinData = require("./network/mcpe/protocol/types/SkinData");
+const Entity = require("./entity/Entity");
+const AvailableActorIdentifiersPacket = require("./network/mcpe/protocol/AvailableActorIdentifiersPacket");
+const Utils = require("./utils/Utils");
 
 class Player extends Entity {
 

@@ -66,7 +66,7 @@ class Server {
 		let targets = [];
 		players.forEach(player => {
 			if (player.isConnected()) {
-				targets.push(this.raknet.players.getPlayer(player.address.toString()));
+				targets.push(this.raknet.players[player.address.toString()]);
 			}
 		});
 
@@ -99,10 +99,10 @@ class Server {
 	}
 
 	/**
-	 * @return {Array}
+	 * @return {Object}
 	 */
 	getOnlinePlayers() {
-		return Array.from(this.raknet.players.values());
+		return Object.values(this.raknet.players);
 	}
 
 	/**
@@ -118,13 +118,13 @@ class Server {
 
 			if (immediate) {
 				targets.forEach(player => {
-					if (this.raknet.players.has(player.address.toString())) {
+					if (player.address.toString() in this.raknet.players) {
 						player.sendDataPacket(pk, true);
 					}
 				});
 			} else {
 				targets.forEach(player => {
-					if (this.raknet.players.has(player.address.toString())) {
+					if (player.address.toString() in this.raknet.players) {
 						player.sendDataPacket(pk);
 					}
 				});
@@ -146,11 +146,10 @@ class Server {
 	 * @return {number}
 	 */
 	broadcastMessage(message) {
-		let players = this.getOnlinePlayers();
-		players.forEach(players => {
-			players.sendMessage(message)
-		});
-		return players.length;
+		let onlinePlayers = this.getOnlinePlayers();
+		for(let players of onlinePlayers){
+			players.sendMessage(message);
+		}
 	}
 }
 

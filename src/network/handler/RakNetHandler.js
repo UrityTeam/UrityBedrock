@@ -13,20 +13,20 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Player = require("../../player/Player");
 const Identifiers = require("../mcpe/protocol/Identifiers");
 const GamePacket = require("../mcpe/protocol/GamePacket");
+const Player = require("../../Player");
 
 class RakNetHandler {
 
     static handlePlayerConnection(inter, connection){
         let player = new Player(inter.server, connection);
-        inter.players.addPlayer(connection.address.toString(), player);
+        inter.players[connection.address.toString()] = player;
     }
 
     static handlePlayerDisconnection(inter, address){
-        if (inter.players.hasPlayer(address.toString())) {
-            inter.players.removePlayer(address.toString());
+        if (address.toString() in inter.players) {
+            delete inter.players[address.toString()];
         }
     }
 
@@ -41,7 +41,7 @@ class RakNetHandler {
     }
 
     static handlePackets(inter, stream, connection){
-        let player = inter.players.getPlayer(connection.address.toString());
+        let player = inter.players[connection.address.toString()];
         let pk = new GamePacket();
         pk.buffer = stream.buffer;
         pk.decode();
