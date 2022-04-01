@@ -24,14 +24,18 @@ class StartGamePacket extends DataPacket {
 	entityId;
 	entityRuntimeId;
 
+	x;
+	y;
+	z;
+
 	encodePayload() {
 		this.writeSignedVarLong(this.entityId); // Entity id
 		this.writeVarLong(this.entityRuntimeId); // Runtime entity id
 		this.writeSignedVarInt(1); // Player gamemode
 
-		this.writeFloatLE(0.0); // Player x
-		this.writeFloatLE(4.0); // Player y
-		this.writeFloatLE(0.0); // PLayer z
+		this.writeFloatLE(this.x); // Player x
+		this.writeFloatLE(this.y); // Player y
+		this.writeFloatLE(this.z); // PLayer z
 
 		this.writeFloatLE(0.0); // Pitch
 		this.writeFloatLE(0.0); // Yaw

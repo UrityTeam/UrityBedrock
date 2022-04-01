@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "bbmc-binarystream": "git+https://github.com/BlueBirdMC/BinaryStream.git",
-    "bbmc-raknet": "git+https://github.com/BlueBirdMC/RakNet.git"
+    "bbmc-raknet": "git+https://github.com/BlueBirdMC/RakNet.git",
+    "bbmc-math": "git+https://github.com/BlueBirdMC/Math.git"
   },
   "author": "BlueBirdMC Team",
   "license": "GPL-3.0",

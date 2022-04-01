@@ -19,32 +19,32 @@ const Player = require("../../Player");
 
 class RakNetHandler {
 
-    static handlePlayerConnection(inter, connection){
-        let player = new Player(inter.server, connection);
-        if(!(connection.address.toString() in inter.players)){
-            inter.players[connection.address.toString()] = player;
+    static handlePlayerConnection(raknet, connection){
+        let player = new Player(raknet.server, connection);
+        if(!(connection.address.toString() in raknet.players)){
+            raknet.players[connection.address.toString()] = player;
         }
     }
 
-    static handlePlayerDisconnection(inter, address){
-        if (address.toString() in inter.players) {
-            delete inter.players[address.toString()];
+    static handlePlayerDisconnection(raknet, address){
+        if (address.toString() in raknet.players) {
+            delete raknet.players[address.toString()];
         }
     }
 
-    static updatePong(inter){
+    static updatePong(raknet){
         let interval = setInterval(() => {
-            if(inter.raknet.isRunning === true){
-                inter.raknet.message = "MCPE;" + inter.bluebirdcfg.get("motd") + ";" + Identifiers.CURRENT_PROTOCOL + ";" + Identifiers.MINECRAFT_VERSION + ";" + inter.server.getOnlinePlayers().length + ";" + inter.bluebirdcfg.get("maxplayers") + ";" + inter.raknet.serverGUID.toString() + ";";
+            if(raknet.raknet.isRunning === true){
+                raknet.raknet.message = "MCPE;" + raknet.bluebirdcfg.get("motd") + ";" + Identifiers.CURRENT_PROTOCOL + ";" + Identifiers.MINECRAFT_VERSION + ";" + raknet.server.getOnlinePlayers().length + ";" + raknet.bluebirdcfg.get("maxplayers") + ";" + raknet.raknet.serverGUID.toString() + ";";
             }else{
                 clearInterval(interval);
             }
         });
     }
 
-    static handlePackets(inter, stream, connection){
-        if(connection.address.toString() in inter.players){
-            let player = inter.players[connection.address.toString()];
+    static handlePackets(raknet, stream, connection){
+        if(connection.address.toString() in raknet.players){
+            let player = raknet.players[connection.address.toString()];
             let pk = new GamePacket();
             pk.buffer = stream.buffer;
             pk.decode();
