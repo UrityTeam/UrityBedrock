@@ -18,16 +18,26 @@ const Config = require("./utils/Config");
 const RakNetInterface = require("./network/RakNetInterface");
 const Logger = require("./utils/MainLogger");
 const fs = require("fs");
+const CommandMap = require("./command/CommandMap");
+const CommandRegisterer = require("./command/CommandRegisterer");
+const ConsoleCommandReader = require("./command/ConsoleCommandReader");
 
 class Server {
 	logger;
 	raknet;
 	dataPath;
 	bluebirdcfg;
+	commandMap;
+
+	static #instance = null;
 
 	constructor(dataPath, sn, sv) {
 		let start_time = Date.now();
+		this.constructor.#instance = this;
 		this.logger = new Logger();
+		this.commandMap = new CommandMap();
+		new CommandRegisterer(this);
+		new ConsoleCommandReader(this);
 		this.dataPath = dataPath;
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
@@ -53,7 +63,39 @@ class Server {
 			this.raknet.handle();
 		}
 		this.getLogger().info("Server listened on " + this.bluebirdcfg.getNested("address.name") + ":" + this.bluebirdcfg.getNested("address.port"));
-		this.getLogger().info("Done in (" + (Date.now() - start_time).toFixed(1) + "ms).");
+		this.getLogger().info("Done in (" + (Date.now() - start_time) + "ms).");
+	}
+
+	static getInstance(){
+		return this.constructor.#instance;
+	}
+
+	getCommandMap(){
+		return this.commandMap;
+	}
+
+	dispatchCommand(sender, cmd){
+		this.commandMap.dispatch(sender, cmd);
+	}
+
+	getPlayerByPrefix(name){
+		const player = this.getOnlinePlayers().find(player => player.getName().toLowerCase().startsWith(name.toLowerCase()));
+
+		if (player === false){
+			throw new Error(`cant find player with name: ${name}`);
+		}
+		
+		return player;
+	}
+
+	getPlayerByFullName(name){
+		const player = this.getOnlinePlayers().find(player => player.getName() === name);
+
+		if (player === false){
+			throw new Error(`cant find player with name: ${name}`);
+		}
+		
+		return player;
 	}
 
 	/**
