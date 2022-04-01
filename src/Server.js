@@ -29,11 +29,8 @@ class Server {
 	bluebirdcfg;
 	commandMap;
 
-	static #instance = null;
-
 	constructor(dataPath, sn, sv) {
 		let start_time = Date.now();
-		this.constructor.#instance = this;
 		this.logger = new Logger();
 		this.commandMap = new CommandMap();
 		new CommandRegisterer(this);
@@ -64,10 +61,6 @@ class Server {
 		}
 		this.getLogger().info("Server listened on " + this.bluebirdcfg.getNested("address.name") + ":" + this.bluebirdcfg.getNested("address.port"));
 		this.getLogger().info("Done in (" + (Date.now() - start_time) + "ms).");
-	}
-
-	static getInstance(){
-		return this.constructor.#instance;
 	}
 
 	getCommandMap(){
