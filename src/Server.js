@@ -143,7 +143,6 @@ class Server {
 
 	/**
 	 * @param message {String}
-	 * @return {number}
 	 */
 	broadcastMessage(message) {
 		let onlinePlayers = this.getOnlinePlayers();
