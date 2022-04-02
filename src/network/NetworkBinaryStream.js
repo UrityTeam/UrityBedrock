@@ -22,14 +22,14 @@ const SkinImage = require("./mcpe/protocol/types/SkinImage");
 
 class NetworkBinaryStream extends require("bbmc-binarystream") {
 	/**
-	 * @return {String}
+	 * @return {string}
 	 */
 	readString() {
 		return this.read(this.readVarInt()).toString();
 	}
 
 	/**
-	 * @param v {String}
+	 * @param {stirng} v
 	 */
 	writeString(v) {
 		this.writeVarInt(Buffer.byteLength(v));
@@ -51,7 +51,7 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 	}
 
 	/**
-	 * @param uuid {UUID}
+	 * @param {UUID} uuid
 	 */
 	writeUUID(uuid) {
 		this.writeIntLE(uuid.getPart(1));
