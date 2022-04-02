@@ -1,6 +1,6 @@
 {
   "name": "bluebird",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A server software for Minecraft: Bedrock edition",
   "main": "src/BlueBird.js",
   "scripts": {
@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "bbmc-binarystream": "git+https://github.com/BlueBirdMC/BinaryStream.git",
+    "bbmc-math": "git+https://github.com/BlueBirdMC/Math.git",
     "bbmc-raknet": "git+https://github.com/BlueBirdMC/RakNet.git",
-    "bbmc-math": "git+https://github.com/BlueBirdMC/Math.git"
+    "extends-classes": "^1.0.5"
   },
   "author": "BlueBirdMC Team",
   "license": "GPL-3.0",

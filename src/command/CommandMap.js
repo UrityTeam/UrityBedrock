@@ -30,6 +30,10 @@ class CommandMap {
         return CommandMap.list[commandName];
     }
 
+    getCommands(){
+        return Object.values(CommandMap.list);
+    }
+
     dispatch(sender, cmd){
         if(cmd === "")return;
         cmd = cmd.split(" ");

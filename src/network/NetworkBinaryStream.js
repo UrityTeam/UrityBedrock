@@ -60,6 +60,9 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 		this.writeIntLE(uuid.getPart(2));
 	}
 
+	/**
+	 * @returns {SkinData}
+	 */
 	readSkin() {
 		let skinId = this.readString();
 		let skinPlayFabId = this.readString();
@@ -115,7 +118,7 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 	}
 
 	/**
-	 * @param skin {SkinData}
+	 * @param {SkinData} skin 
 	 */
 	writeSkin(skin){
 		this.writeString(skin.getSkinId());
@@ -166,6 +169,9 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 		this.writeBool(skin.isPrimaryUser());
 	}
 
+	/**
+	 * @returns {SkinImage}
+	 */
 	readSkinImage(){
 		let width = this.readIntLE();
 		let height = this.readIntLE();
@@ -173,6 +179,9 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 		return new SkinImage(height, width, data);
 	}
 
+	/**
+	 * @param {SkinImage}
+	 */
 	writeSkinImage(image){
 		this.writeIntLE(image.getWidth());
 		this.writeIntLE(image.getHeight());

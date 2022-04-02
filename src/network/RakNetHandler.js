@@ -17,39 +17,39 @@ const { RakNetServer, InternetAddress, Frame, ReliabilityTool } = require("bbmc-
 const GamePacket = require("./mcpe/protocol/GamePacket");
 const Logger = require("../utils/MainLogger");
 const PacketPool = require("./mcpe/protocol/PacketPool");
-const Config = require("../utils/Config");
 const BinaryStream = require("bbmc-binarystream");
-const RakNetHandler = require("./handler/RakNetHandler");
+const Identifiers = require("./mcpe/protocol/Identifiers");
+const Player = require("../Player");
 
-class RakNetInterface {
+class RakNetHandler {
 	/** @type MainLogger */
 	logger;
 	/** @type PlayerList */
 	players;
 	/** @type {RakNetServer, EventEmitter} */
 	raknet;
-	/** @type Config */
-	bluebirdcfg;
 	/** @type Server */
 	server;
 
+	static MCPE_PROTOCOL_VERSION = 10;
+
 	players = {};
 
-	constructor(server) {
+	constructor(server, AddrName, AddrPort, AddrVersion) {
 		PacketPool.init();
 		this.server = server;
-		this.bluebirdcfg = new Config("BlueBird.json", Config.JSON);
 		this.logger = new Logger();
-		this.raknet = new RakNetServer(new InternetAddress
-			(this.bluebirdcfg.getNested("address.name"),
-			this.bluebirdcfg.getNested("address.port"),
-			this.bluebirdcfg.getNested("address.version")),
-			10);
-		this.logger.setDebuggingLevel(this.bluebirdcfg.get("debug_level"));
+		this.raknet = new RakNetServer(new InternetAddress(
+			AddrName,
+			AddrPort,
+			AddrVersion),
+			RakNetHandler.MCPE_PROTOCOL_VERSION
+		);
+		this.logger.setDebuggingLevel(this.server.bluebirdcfg.get("debug_level"));
 	}
 
 	queuePacket(player, packet, immediate) {
-		if (player.address.toString() in this.players) {
+		if (player.connection.address.toString() in this.players) {
 			if (!packet.isEncoded) {
 				packet.encode();
 			}
@@ -66,18 +66,35 @@ class RakNetInterface {
 	}
 
 	handle() {
-		RakNetHandler.updatePong(this);
+		let interval = setInterval(() => {
+            if(this.raknet.isRunning === true){
+				this.raknet.message = `MCPE;${this.server.bluebirdcfg.get('motd')};${Identifiers.CURRENT_PROTOCOL};${Identifiers.MINECRAFT_VERSION};${this.server.getOnlinePlayers().length};${this.server.bluebirdcfg.get('maxplayers')};${this.raknet.serverGUID.toString()};`;
+            }else{
+                clearInterval(interval);
+            }
+        });
 
 		this.raknet.on('connect', (connection) => {
-			RakNetHandler.handlePlayerConnection(this, connection);
+			let player = new Player(this.server, connection);
+			if(!(connection.address.toString() in this.players)){
+				this.players[connection.address.toString()] = player;
+			}
 		});
 
 		this.raknet.on('disconnect', (address) => {
-			RakNetHandler.handlePlayerDisconnection(this, address);
+			if (address.toString() in this.players) {
+				delete this.players[address.toString()];
+			}
 		});
 
 		this.raknet.on('packet', (stream, connection) => {
-			RakNetHandler.handlePackets(this, stream, connection);
+			if(connection.address.toString() in this.players){
+				let player = this.players[connection.address.toString()];
+				let packet = new GamePacket();
+				packet.buffer = stream.buffer;
+				packet.decode();
+				packet.handle(player.getNetworkSession());
+			}
 		});
 	}
 
@@ -92,4 +109,4 @@ class RakNetInterface {
 	}
 }
 
-module.exports = RakNetInterface;
+module.exports = RakNetHandler;

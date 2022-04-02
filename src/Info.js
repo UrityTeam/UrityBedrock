@@ -1,6 +1,6 @@
 class Info {
-	static SOFTWARE_NAME = "BlueBird";
-	static SOFTWARE_VERSION = "1.0.4";
+	static NAME = "BlueBird";
+	static VERSION = "1.0.5";
 }
 
 module.exports = Info;

@@ -4,7 +4,7 @@ const Command = require("../Command");
 
 class TitleCommand extends Command {
     constructor(){
-        super("title");
+        super("title", "send a title to a player");
     }
 
     execute(sender, args){

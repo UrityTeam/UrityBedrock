@@ -30,7 +30,7 @@ const AvailableActorIdentifiersPacket = require("./AvailableActorIdentifiersPack
 
 class PacketPool {
 
-	static #pool = new Map();
+	static #pool = {};
 
 	static init() {
 		this.registerPacket(LoginPacket);
@@ -50,11 +50,15 @@ class PacketPool {
 	}
 
 	static registerPacket(packet) {
-		this.#pool.set(packet.NETWORK_ID, packet);
+		if(packet.NETWORK_ID in this.#pool){
+			throw new Error("Trying to register already registered packet");
+		}
+		this.#pool[packet.NETWORK_ID] = packet;
 	}
 
 	static getPacket(id) {
-		return this.#pool.has(id) ? new (this.#pool.get(id))() : null;
+		let packet = this.#pool[id];
+		return typeof this.#pool[id] !== "undefined" ? new packet : false;
 	}
 }
 

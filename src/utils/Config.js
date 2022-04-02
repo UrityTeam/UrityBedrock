@@ -20,9 +20,13 @@ class Config {
 	static DETECT = 0;
 	static JSON = 1;
 
+	/** @type {Boolean} */
 	correct;
+	/** @type {Stirng} */
 	file;
+	/** @type {number} */
 	type;
+	/** @type {Object} */
 	config;
 
 	/**

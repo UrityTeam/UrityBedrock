@@ -38,25 +38,44 @@ const SkinData = require("./network/mcpe/protocol/types/SkinData");
 const Entity = require("./entity/Entity");
 const AvailableActorIdentifiersPacket = require("./network/mcpe/protocol/AvailableActorIdentifiersPacket");
 const Utils = require("./utils/Utils");
+const Skin = require("./entity/Skin");
+const { Connection } = require("bbmc-raknet");
+const Server = require("./Server");
+const LoginPacket = require("./network/mcpe/protocol/LoginPacket");
+const DataPacket = require("./network/mcpe/protocol/DataPacket");
+const CommandSender = require("./command/CommandSender");
+const Many = require("extends-classes");
 
-class Player extends Entity {
+class Player extends Many(Entity, CommandSender) {
 
+	/** @type {string} */
 	username = "";
+	/** @type {Boolean} */
 	loggedIn = false;
-	locale = "en_US";
+	/** @type {string} */
+	languageCode = "en_US";
+	/** @type {Skin} */
 	skin;
+	/** @type {UUID} */
 	uuid;
-	address;
+	/** @type {PlayerNetworkSession} */
 	networkSession;
+	/** @type {string} */
 	xuid;
+	/** @type {number} */
 	clientId;
+	/** @type {Boolean} */
 	authorized;
+	/** @type {Connection} */
 	connection;
 
+	/**
+	 * @param {Server} server 
+	 * @param {Connection} connection 
+	 */
 	constructor(server, connection) {
 		super();
 		this.server = server;
-		this.address = connection.address;
 		this.connection = connection;
 		this.networkSession = new PlayerNetworkSession(this);
 	}
@@ -69,10 +88,19 @@ class Player extends Entity {
 		return this.networkSession;
 	}
 
+	/**
+	 * @returns {Boolean}
+	 */
 	isConnected() {
 		return this.networkSession !== null;
 	}
 
+	/**
+	 * @param {Skin} skin 
+	 * @param {string} oldSkinName 
+	 * @param {string} newSkinName 
+	 * @returns {void}
+	 */
 	changeSkin(skin, oldSkinName, newSkinName) {
 		if (!skin.isValid()) {
 			return;
@@ -82,6 +110,9 @@ class Player extends Entity {
 		this.sendSkin();
 	}
 
+	/**
+	 * @param {Player[]} targets_1 
+	 */
 	sendSkin(targets_1 = null) {
 		let targets = targets_1 === null ? this.server.getOnlinePlayers() : targets_1;
 		let pk = new PlayerSkinPacket();
@@ -90,11 +121,18 @@ class Player extends Entity {
 		this.server.broadcastPacket(targets, pk);
 	}
 
+	/**
+	 * @param {Skin} skin 
+	 */
 	setSkin(skin) {
 		skin.validate();
 		this.skin = skin;
 	}
 
+	/**
+	 * @param {LoginPacket} packet 
+	 * @returns {void}
+	 */
 	handleLogin(packet) {
 		if (packet.protocol !== ProtocolInfo.CURRENT_PROTOCOL) {
 			if (packet.protocol < ProtocolInfo.CURRENT_PROTOCOL) {
@@ -110,8 +148,8 @@ class Player extends Entity {
 		this.username = TextFormat.clean(packet.username);
 		this.clientId = packet.clientId;
 
-		if (packet.locale !== null) {
-			this.locale = packet.locale;
+		if (packet.languageCode !== null) {
+			this.languageCode = packet.languageCode;
 		}
 
 		this.uuid = UUID.fromString(packet.clientUUID);
@@ -194,6 +232,10 @@ class Player extends Entity {
 		this.onVerifyCompleted(packet, null, true);
 	}
 
+	/**
+	 * @param {ResourcePackClientResponsePacket} packet 
+	 * @returns {Boolean}
+	 */
 	handleResourcePackClientResponse(packet) {
 		switch (packet.status) {
 			case ResourcePackClientResponsePacket.STATUS_REFUSED:
@@ -226,9 +268,15 @@ class Player extends Entity {
 				this.sendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 				break;
 		}
-		return true;
 	}
 
+	/**
+	 * 
+	 * @param {LoginPacket} packet 
+	 * @param {string} error 
+	 * @param {Boolean} signedByMojang 
+	 * @returns {void}
+	 */
 	onVerifyCompleted(packet, error, signedByMojang) {
 		if (error !== null) {
 			this.close("Invalid session");
@@ -236,13 +284,12 @@ class Player extends Entity {
 		}
 
 		let xuid = packet.xuid;
-		let cfg = new Config("BlueBird.json", Config.JSON);
 
-		if (!signedByMojang && xuid !== "") {
-			this.server.getLogger().info(this.username + " has an XUID, but their login keychain is not signed by Mojang");
+		if (!signedByMojang && xuid) {
+			this.server.getLogger().info(`${this.username} has an XUID, but his login keychain is not signed by microsoft`);
 			this.authorized = false;
-			if (cfg.get("xbox-auth") === true) {
-				this.server.getLogger().debug(this.username + " is not logged into Xbox Live");
+			if (this.server.bluebirdcfg.get("xbox-auth") === true) {
+				this.server.getLogger().debug(`${this.username} is not logged into Xbox Live`);
 				this.close("To join this server you must login to your xbox account");
 				return;
 			}
@@ -251,21 +298,22 @@ class Player extends Entity {
 
 		if (!this.username) {
 			this.close("Username is required");
+			return;
 		}
 
-		if (xuid === "" || !xuid instanceof String) {
+		if (!xuid || !xuid instanceof String) {
 			if (signedByMojang) {
-				this.server.getLogger().warning(this.username + " tried to join without XUID");
+				this.server.getLogger().warning(`${this.username} tried to join without XUID`);
 				this.authorized = false;
-				if (cfg.get("xbox-auth") === true) {
+				if (this.server.bluebirdcfg.get("xbox-auth") === true) {
 					this.close("To join this server you must login to your xbox account");
 					return;
 				}
 			}
-			this.server.getLogger().debug(this.username + " is not logged into Xbox Live");
+			this.server.getLogger().debug(`${this.username} is not logged in xbox Live`);
 		} else {
 			this.authorized = true;
-			this.server.getLogger().debug(this.username + " is logged into Xbox Live");
+			this.server.getLogger().debug(`${this.username} is logged in xbox Live`);
 		}
 
 		this.xuid = xuid;
@@ -280,30 +328,33 @@ class Player extends Entity {
 		packsInfo.forceServerPacks = false;
 		this.sendDataPacket(packsInfo);
 
-		this.server.getLogger().info("Player " + this.username + " joined the game");
-		this.server.broadcastMessage("§ePlayer " + this.username + " joined the game");
+		this.server.getLogger().info(`Player ${this.username} joined the game`);
+		this.server.broadcastMessage(`§ePlayer ${this.username} joined the game`);
 	}
 
-	handleText(packet) {
-		if (packet.type === TextPacket.TYPE_CHAT) {
-			let message = TextFormat.clean(packet.message);
-			message = message.split("\n");
-			for (let i in message) {
-				let messageElement = message[i];
-				if (messageElement.trim() !== "" && messageElement.length <= 255) {
-					if (messageElement.startsWith("/")) {
-						//TODO: Send Commands Packet
-						return false;
-					}
-					let msg = "<:player> :message".replace(":player", this.getName()).replace(":message", messageElement);
-					this.server.broadcastMessage(msg);
-					this.server.getLogger().info(msg);
+	/**
+	 * @param {string} message 
+	 * @returns {void}
+	 */
+	chat(message) {
+		message = message.split("\n");
+		for (let i in message) {
+			let messageElement = message[i];
+			if (messageElement.trim() !== "" && messageElement.length <= 255) {
+				if (messageElement.startsWith("/")) {
+					//TODO: Send Command Packet
+					return;
 				}
+				let msg = "<:player> :message".replace(":player", this.getName()).replace(":message", messageElement);
+				this.server.broadcastMessage(msg);
+				this.server.getLogger().info(msg);
 			}
-			return true;
 		}
 	}
 
+	/**
+	 * @param {string} message 
+	 */
 	sendMessage(message) {
 		let pk = new TextPacket();
 		pk.type = TextPacket.TYPE_RAW;
@@ -311,6 +362,13 @@ class Player extends Entity {
 		this.sendDataPacket(pk);
 	}
 
+	/**
+	 * @param {string} title 
+	 * @param {string} subtitle 
+	 * @param {number} fadeIn 
+	 * @param {number} stay 
+	 * @param {number} fadeOut 
+	 */
 	sendTitle(title, subtitle = "", fadeIn = -1, stay = -1, fadeOut = -1) {
 		this.setTitleDuration(fadeIn, stay, fadeOut);
 		if (subtitle !== "") {
@@ -319,22 +377,32 @@ class Player extends Entity {
 		this.sendTitleText(title, SetTitlePacket.TYPE_SET_TITLE);
 	}
 
+	/**
+	 * @param {string} subtitle 
+	 */
 	sendSubTitle(subtitle) {
 		this.sendTitleText(subtitle, SetTitlePacket.TYPE_SET_SUBTITLE);
 	}
 
+	/** clear the player titles */
 	clearTitles() {
 		let pk = new SetTitlePacket();
 		pk.type = SetTitlePacket.TYPE_CLEAR_TITLE;
 		this.sendDataPacket(pk);
 	}
 
+	/** reset the player titles */
 	resetTitles() {
 		let pk = new SetTitlePacket();
 		pk.type = SetTitlePacket.TYPE_RESET_TITLE;
 		this.sendDataPacket(pk);
 	}
 
+	/**
+	 * @param {number} fadeIn 
+	 * @param {number} stay 
+	 * @param {number} fadeOut 
+	 */
 	setTitleDuration(fadeIn, stay, fadeOut) {
 		if (fadeIn >= 0 && stay >= 0 && fadeOut >= 0) {
 			let pk = new SetTitlePacket();
@@ -346,6 +414,10 @@ class Player extends Entity {
 		}
 	}
 
+	/**
+	 * @param {string} title 
+	 * @param {number} type 
+	 */
 	sendTitleText(title, type) {
 		let pk = new SetTitlePacket();
 		pk.type = type;
@@ -353,12 +425,20 @@ class Player extends Entity {
 		this.sendDataPacket(pk);
 	}
 
+	/**
+	 * @param {number} status 
+	 * @param {Boolean} immediate 
+	 */
 	sendPlayStatus(status, immediate = false) {
 		let play_status_packet = new PlayStatusPacket();
 		play_status_packet.status = status;
 		this.sendDataPacket(play_status_packet, immediate);
 	}
 
+	/**
+	 * @param {string} reason 
+	 * @param {Boolean} hide_disconnection_screen 
+	 */
 	close(reason, hide_disconnection_screen = false) {
 		this.server.getLogger().info("Player " + this.username + " disconnected due to " + reason);
 		this.server.broadcastMessage("§ePlayer " + this.username + " left the game");
@@ -369,31 +449,51 @@ class Player extends Entity {
 		this.connection.disconnect(reason);
 	}
 
+	/**
+	 * @returns {string}
+	 */
 	getXuid() {
 		return this.xuid;
 	}
 
+	/**
+	 * @returns {number}
+	 */
 	getClientId() {
 		return this.clientId;
 	}
 
+	/**
+	 * @returns {Boolean}
+	 */
 	isAuthorized() {
 		return this.authorized;
 	}
 
+	/**
+	 * @returns {UUID}
+	 */
 	getUUID() {
 		return this.uuid;
 	}
 
+	/**
+	 * @returns {string}
+	 */
 	getName() {
 		return this.username;
 	}
 
+	/**
+	 * @param {DataPacket} packet 
+	 * @param {Boolean} immediate 
+	 * @returns {void}
+	 */
 	sendDataPacket(packet, immediate = false) {
-		if (!this.isConnected()) return false;
+		if (!this.isConnected()) return;
 
 		if (!this.loggedIn && !packet.canBeSentBeforeLogin) {
-			throw new Error("Attempted to send " + packet.getName() + " to " + this.getName() + " before they got logged in.");
+			throw new Error(`Attempted to send ${packet.getName()} to ${this.networkSession.toString()} before he got logged in`);
 		}
 
 		this.server.raknet.queuePacket(this, packet, immediate);

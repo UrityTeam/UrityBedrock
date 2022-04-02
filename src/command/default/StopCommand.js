@@ -2,7 +2,7 @@ const Command = require("../Command");
 
 class StopCommand extends Command {
     constructor(){
-        super("stop");
+        super("stop", "stop the server");
     }
 
     execute(sender, args){
