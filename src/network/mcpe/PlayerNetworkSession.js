@@ -19,19 +19,23 @@ const TextPacket = require("./protocol/TextPacket");
 const SkinAdapterSingleton = require("./protocol/types/SkinAdapterSingleton");
 
 class PlayerNetworkSession {
+	/** @type {Server} */
 	server;
+	/** @type {Player} */
 	player;
 
 	/**
-	 * @param player {Player}
+	 * @param {Player} player
 	 */
 	constructor(player) {
-		/** @type {Server} */
 		this.server = player.server;
-		/** @type {Player} */
 		this.player = player;
 	}
 
+	/**
+	 * @param {DataPacket} packet 
+	 * @returns 
+	 */
 	handleDataPacket(packet) {
 		if (!packet instanceof DataPacket) {
 			throw new Error("expected a packet instanceof DataPacket got " + packet);

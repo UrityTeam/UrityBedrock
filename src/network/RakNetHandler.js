@@ -20,21 +20,29 @@ const PacketPool = require("./mcpe/protocol/PacketPool");
 const BinaryStream = require("bbmc-binarystream");
 const Identifiers = require("./mcpe/protocol/Identifiers");
 const Player = require("../Player");
+const DataPacket = require("./mcpe/protocol/DataPacket");
 
 class RakNetHandler {
-	/** @type MainLogger */
+	/** @type {MainLogger} */
 	logger;
-	/** @type PlayerList */
+	/** @type {PlayerList} */
 	players;
 	/** @type {RakNetServer, EventEmitter} */
 	raknet;
-	/** @type Server */
+	/** @type {Server} */
 	server;
+	/** @type {Object} */
+	players = {};
 
 	static MCPE_PROTOCOL_VERSION = 10;
 
-	players = {};
-
+	/**
+	 * 
+	 * @param {Server} server 
+	 * @param {string} AddrName 
+	 * @param {number} AddrPort 
+	 * @param {number} AddrVersion 
+	 */
 	constructor(server, AddrName, AddrPort, AddrVersion) {
 		PacketPool.init();
 		this.server = server;
@@ -48,6 +56,11 @@ class RakNetHandler {
 		this.logger.setDebuggingLevel(this.server.bluebirdcfg.get("debug_level"));
 	}
 
+	/**
+	 * @param {Player} player 
+	 * @param {DataPacket} packet 
+	 * @param {Boolean} immediate 
+	 */
 	queuePacket(player, packet, immediate) {
 		if (player.connection.address.toString() in this.players) {
 			if (!packet.isEncoded) {
@@ -98,6 +111,10 @@ class RakNetHandler {
 		});
 	}
 
+	/**
+	 * @param {InternetAddress} address 
+	 * @param {string} reason 
+	 */
 	close(address, reason) {
 		if (address.toString() in this.players) {
 			this.players[address.toString()].disconnect(reason);
