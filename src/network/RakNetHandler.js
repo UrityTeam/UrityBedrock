@@ -67,12 +67,12 @@ class RakNetHandler {
 
 	handle() {
 		let interval = setInterval(() => {
-            if(this.raknet.isRunning === true){
+			if(this.raknet.isRunning === true){
 				this.raknet.message = `MCPE;${this.server.bluebirdcfg.get('motd')};${Identifiers.CURRENT_PROTOCOL};${Identifiers.MINECRAFT_VERSION};${this.server.getOnlinePlayers().length};${this.server.bluebirdcfg.get('maxplayers')};${this.raknet.serverGUID.toString()};`;
-            }else{
-                clearInterval(interval);
-            }
-        });
+			}else{
+				clearInterval(interval);
+			}
+		});
 
 		this.raknet.on('connect', (connection) => {
 			let player = new Player(this.server, connection);
