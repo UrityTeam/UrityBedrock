@@ -27,6 +27,7 @@ const DisconnectPacket = require("./DisconnectPacket");
 const PlayerSkinPacket = require("./PlayerSkinPacket");
 const SetLocalPlayerAsInitializedPacket = require("./SetLocalPlayerAsInitializedPacket");
 const AvailableActorIdentifiersPacket = require("./AvailableActorIdentifiersPacket");
+const AvailableCommandsPacket = require("./AvailableCommandsPacket");
 
 class PacketPool {
 
@@ -46,6 +47,7 @@ class PacketPool {
 		this.registerPacket(DisconnectPacket);
 		this.registerPacket(SetLocalPlayerAsInitializedPacket);
 		this.registerPacket(AvailableActorIdentifiersPacket);
+		// this.registerPacket(AvailableCommandsPacket);
 		// this.registerPacket(PlayerSkinPacket);
 	}
 
