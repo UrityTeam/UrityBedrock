@@ -73,7 +73,7 @@ class PlayerNetworkSession {
 	}
 
 	handlePlayerSkin(packet) {
-		this.player.changeSkin(SkinAdapterSingleton.get().fromSkinData(packet.skin), packet.oldSkinName, packet.newSkinName);
+		this.player.changeSkin(SkinAdapterSingleton.get().fromSkinData(packet.skin), packet.oldSkinName, packet.skinName);
 		return true;
 	}
 
