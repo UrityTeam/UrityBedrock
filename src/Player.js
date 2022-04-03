@@ -26,7 +26,6 @@ const CreativeContentPacket = require("./network/mcpe/protocol/CreativeContentPa
 const TextPacket = require("./network/mcpe/protocol/TextPacket");
 const SetTitlePacket = require("./network/mcpe/protocol/SetTitlePacket");
 const DisconnectPacket = require("./network/mcpe/protocol/DisconnectPacket");
-const Config = require("./utils/Config");
 const PlayerSkinPacket = require("./network/mcpe/protocol/PlayerSkinPacket");
 const UUID = require("./utils/UUID");
 const SkinAdapterSingleton = require("./network/mcpe/protocol/types/SkinAdapterSingleton");
@@ -35,7 +34,6 @@ const SkinAnimation = require("./network/mcpe/protocol/types/SkinAnimation");
 const PersonaSkinPiece = require("./network/mcpe/protocol/types/PersonaSkinPiece");
 const PersonaPieceTintColor = require("./network/mcpe/protocol/types/PersonaPieceTintColor");
 const SkinData = require("./network/mcpe/protocol/types/SkinData");
-const Entity = require("./entity/Entity");
 const AvailableActorIdentifiersPacket = require("./network/mcpe/protocol/AvailableActorIdentifiersPacket");
 const Utils = require("./utils/Utils");
 const Skin = require("./entity/Skin");
@@ -45,8 +43,9 @@ const LoginPacket = require("./network/mcpe/protocol/LoginPacket");
 const DataPacket = require("./network/mcpe/protocol/DataPacket");
 const CommandSender = require("./command/CommandSender");
 const Many = require("extends-classes");
+const Human = require("./entity/Human");
 
-class Player extends Many(Entity, CommandSender) {
+class Player extends Many(Human, CommandSender) {
 
 	/** @type {string} */
 	username = "";
@@ -54,8 +53,6 @@ class Player extends Many(Entity, CommandSender) {
 	loggedIn = false;
 	/** @type {string} */
 	languageCode = "en_US";
-	/** @type {Skin} */
-	skin;
 	/** @type {UUID} */
 	uuid;
 	/** @type {PlayerNetworkSession} */
@@ -74,7 +71,7 @@ class Player extends Many(Entity, CommandSender) {
 	 * @param {Connection} connection 
 	 */
 	constructor(server, connection) {
-		super();
+		super(server, null);
 		this.server = server;
 		this.connection = connection;
 		this.networkSession = new PlayerNetworkSession(this);
@@ -106,27 +103,10 @@ class Player extends Many(Entity, CommandSender) {
 			return;
 		}
 
+		// this.server.broadcastMessage(`${this.getName()} changed his skin from ${oldSkinName} to ${newSkinName}`);
+
 		this.setSkin(skin);
 		this.sendSkin();
-	}
-
-	/**
-	 * @param {Player[]} targets_1 
-	 */
-	sendSkin(targets_1 = null) {
-		let targets = targets_1 === null ? this.server.getOnlinePlayers() : targets_1;
-		let pk = new PlayerSkinPacket();
-		pk.uuid = this.uuid;
-		pk.skin = SkinAdapterSingleton.get().toSkinData(this.skin);
-		this.server.broadcastPacket(targets, pk);
-	}
-
-	/**
-	 * @param {Skin} skin 
-	 */
-	setSkin(skin) {
-		skin.validate();
-		this.skin = skin;
 	}
 
 	/**
@@ -154,7 +134,7 @@ class Player extends Many(Entity, CommandSender) {
 
 		this.uuid = UUID.fromString(packet.clientUUID);
 
-		/*let animations = [];
+		let animations = [];
 
 		packet.clientData["AnimatedImageData"].forEach(animation => {
 			animations.push(new SkinAnimation(
@@ -214,7 +194,7 @@ class Player extends Many(Entity, CommandSender) {
 			packet.clientData["PremiumSkin"] ? packet.clientData["PremiumSkin"] : false,
 			packet.clientData["PersonaSkin"] ? packet.clientData["PersonaSkin"] : false,
 			packet.clientData["CapeOnClassicSkin"] ? packet.clientData["CapeOnClassicSkin"] : false,
-			true,
+			true
 		);
 
 		let skin;
@@ -227,7 +207,7 @@ class Player extends Many(Entity, CommandSender) {
 			return;
 		}
 
-		this.setSkin(skin);*/
+		this.setSkin(skin);
 
 		this.onVerifyCompleted(packet, null, true);
 	}

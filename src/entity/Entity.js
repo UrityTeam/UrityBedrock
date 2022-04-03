@@ -21,7 +21,7 @@ class Entity extends Vector3 {
     id;
 
     constructor() {
-        super(0.0, 4.0, 0.0);
+        super(0, 4, 0);
         this.id = Entity.nextRuntimeId();
     }
     

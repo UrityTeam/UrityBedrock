@@ -45,7 +45,7 @@ class LegacySkinAdapter {
 		let capeData = data.isPersonaCapeOnClassic() ? "" : data.getCapeImage().getData();
 
 		let geometryName = "";
-		let resourcePatch = JSON.parse(data.getResourcePatch());
+		let resourcePatch = JSON.parse(JSON.stringify(data.getResourcePatch()));
 
 		if (resourcePatch.constructor === Object && typeof resourcePatch['geometry']['default'] !== 'undefined' && typeof resourcePatch['geometry']['default'] === 'string') {
 			geometryName = resourcePatch['geometry']['default'];

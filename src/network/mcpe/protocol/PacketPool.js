@@ -48,7 +48,7 @@ class PacketPool {
 		this.registerPacket(SetLocalPlayerAsInitializedPacket);
 		this.registerPacket(AvailableActorIdentifiersPacket);
 		// this.registerPacket(AvailableCommandsPacket);
-		// this.registerPacket(PlayerSkinPacket);
+		this.registerPacket(PlayerSkinPacket);
 	}
 
 	static registerPacket(packet) {
