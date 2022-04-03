@@ -236,9 +236,6 @@ class Player extends Many(Human, CommandSender) {
 				let start_game_packet = new StartGamePacket();
 				start_game_packet.entityId = this.id;
 				start_game_packet.entityRuntimeId = this.id;
-				start_game_packet.x = this.x;
-				start_game_packet.y = this.y;
-				start_game_packet.z = this.z;
 				this.sendDataPacket(start_game_packet);
 
 				this.sendDataPacket(new BiomeDefinitionListPacket());
