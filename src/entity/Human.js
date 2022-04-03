@@ -15,6 +15,7 @@
 
 const PlayerSkinPacket = require("../network/mcpe/protocol/PlayerSkinPacket");
 const Entity = require("./Entity");
+const SkinAdapterSingleton = require("../network/mcpe/protocol/types/SkinAdapterSingleton");
 
 class Human extends Entity {
     server;
