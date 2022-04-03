@@ -37,6 +37,21 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 	}
 
 	/**
+	 * @return {Buffer}
+	 */
+	readByteArray() {
+		return this.read(this.readVarInt());
+	}
+
+	/**
+	 * @param {Buffer} v
+	 */
+	writeByteArray(v) {
+		this.writeVarInt(v.length);
+		this.write(v);
+	}
+
+	/**
 	 * @return {UUID}
 	 */
 	readUUID() {
@@ -175,7 +190,7 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 	readSkinImage(){
 		let width = this.readIntLE();
 		let height = this.readIntLE();
-		let data = this.readString();
+		let data = this.readByteArray();
 		return new SkinImage(height, width, data);
 	}
 
@@ -185,7 +200,7 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 	writeSkinImage(image){
 		this.writeIntLE(image.getWidth());
 		this.writeIntLE(image.getHeight());
-		this.writeString(image.getData());
+		this.writeByteArray(image.getData());
 	}
 }
 module.exports = NetworkBinaryStream;
