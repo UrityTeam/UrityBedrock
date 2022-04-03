@@ -207,7 +207,7 @@ class Player extends Many(Human, CommandSender) {
 			return;
 		}
 
-		this.setSkin(skin);
+		this.changeSkin(skin, "", "");
 
 		this.onVerifyCompleted(packet, null, true);
 	}
