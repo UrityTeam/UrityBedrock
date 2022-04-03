@@ -44,7 +44,7 @@ class Human extends Entity {
 		pk.skin = SkinAdapterSingleton.get().toSkinData(this.skin);
 		pk.skinName = "";
 		pk.oldSkinName = "";
-		pk.isValid = true;
+		pk.isVerified = true;
 		this.server.broadcastPacket(targets_1 ? targets_1 : this.server.getOnlinePlayers(), pk);
 	}
 }
