@@ -42,6 +42,9 @@ class Human extends Entity {
 		let pk = new PlayerSkinPacket();
 		pk.uuid = this.uuid;
 		pk.skin = SkinAdapterSingleton.get().toSkinData(this.skin);
+		pk.skinName = "";
+		pk.oldSkinName = "";
+		pk.isValid = true;
 		this.server.broadcastPacket(targets_1 ? targets_1 : this.server.getOnlinePlayers(), pk);
 	}
 }
