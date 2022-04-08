@@ -5,18 +5,18 @@ https://discord.gg/KQCYsxAD2b
 ![image](https://user-images.githubusercontent.com/97077459/159224877-ab364ae4-cdf2-4424-9ac4-49a9315badb5.png)
 
 ## How to use
-> ### **Linux and Windows**
+### **Linux and Windows**
 >
 > You should have NodeJS installed
 >
-> #### Installing NodeJS )> Linux
+#### Installing NodeJS )> Linux
 >
 > sudo apt update && apt install nodejs
 >
-> #### Starting )>
+#### Starting )>
 >
 > npm install && node start.js
 >
-> ### **Termux**
+### **Termux**
 >
 > apt upgrade && apt install nodejs && npm install && node start.js
