@@ -106,7 +106,7 @@ class Player extends Many(Human, CommandSender) {
 		// this.server.broadcastMessage(`${this.getName()} changed his skin from ${oldSkinName} to ${newSkinName}`);
 
 		this.setSkin(skin);
-		this.sendSkin();
+		this.sendSkin(this.server.getOnlinePlayers());
 	}
 
 	/**

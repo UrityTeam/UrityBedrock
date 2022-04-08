@@ -32,21 +32,18 @@ class Human extends Entity {
     * @param {Skin} skin 
     */
     setSkin(skin) {
-	skin.validate();
-	this.skin = skin;
+        skin.validate();
+        this.skin = skin;
     }
     
     /**
      * @param {Player[]} targets_1 
      */
      sendSkin(targets_1 = null) {
-	let pk = new PlayerSkinPacket();
-	pk.uuid = this.uuid;
-	pk.skin = SkinAdapterSingleton.get().toSkinData(this.skin);
-	pk.skinName = "";
-	pk.oldSkinName = "";
-	pk.isVerified = true;
-	this.server.broadcastPacket(targets_1 ? targets_1 : this.server.getOnlinePlayers(), pk);
+        let pk = new PlayerSkinPacket();
+        pk.uuid = this.uuid;
+        pk.skin = SkinAdapterSingleton.get().toSkinData(this.skin);
+        this.server.broadcastPacket(targets_1 ? targets_1 : this.server.getOnlinePlayers(), pk);
      }
 }
 
