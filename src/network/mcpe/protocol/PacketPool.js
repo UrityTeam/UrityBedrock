@@ -53,7 +53,7 @@ class PacketPool {
 
 	static registerPacket(packet) {
 		if(packet.NETWORK_ID in this.#pool){
-			throw new Error("Trying to register already registered packet");
+			throw new Error(`Trying to register already registered packet, packetid=${packet.NETWORK_ID}`);
 		}
 		this.#pool[packet.NETWORK_ID] = packet;
 	}

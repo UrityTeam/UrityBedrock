@@ -1,0 +1,22 @@
+const TextFormat = require("../../utils/TextFormat");
+const Command = require("../Command");
+
+class KickCommand extends Command {
+	constructor(){
+		super("kick", "kick someone");
+	}
+
+	execute(sender, args){
+		let server = sender.getServer();
+        if(args.length < 2){
+            server.getLogger().info(TextFormat.RED + "/kick <playerName> <reason>");
+            return;
+        }
+		let player = server.getPlayerByPrefix(args[0]);
+        if(player !== null && player.isConnected()){
+            player.close(args.slice(1).join(" "));
+        }
+	}
+}
+
+module.exports = KickCommand;

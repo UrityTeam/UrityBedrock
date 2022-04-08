@@ -1,5 +1,6 @@
 const TextFormat = require("../utils/TextFormat");
 const CommandSender = require("./CommandSender");
+const ConsoleCommandSender = require("./ConsoleCommandSender");
 
 class CommandMap {
     static list = {};
@@ -46,6 +47,9 @@ class CommandMap {
                 command.execute(sender, args);
             }
         }else{
+            if(cmd.trim() === "" && sender instanceof ConsoleCommandSender){
+                return;
+            }
             sender.getServer().getLogger().info(TextFormat.DARK_RED + "Unknown command. type 'help' to get list of commands");
         }
     }

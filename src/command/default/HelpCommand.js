@@ -7,11 +7,15 @@ class HelpCommand extends Command {
     }
 
     execute(sender, args){
-        sender.sendMessage(TextFormat.GREEN + "-".repeat(15) + " Help List " + "-".repeat(15));
+        let list = [];
         for(let commands of sender.getServer().getCommandMap().getCommands()){
-            sender.sendMessage(`${TextFormat.YELLOW}/${commands.getName()} : ${commands.getDescription()}`);
+            list.push(commands.getName() + "> " + commands.getDescription());
         }
-        sender.sendMessage(TextFormat.GREEN + "-".repeat(41))
+        sender.sendMessage(TextFormat.GREEN + "-".repeat(list.length) + " Help List " + "-".repeat(list.length));
+        list.forEach(nameAndDesc => {
+            nameAndDesc = nameAndDesc.split("> ");
+            sender.sendMessage(`${TextFormat.YELLOW}/${nameAndDesc[0]} : ${nameAndDesc[1]}`);
+        });
     }
 }
 
