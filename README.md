@@ -9,8 +9,14 @@ https://discord.gg/KQCYsxAD2b
 >
 > You should have NodeJS installed
 >
+> #### Installing NodeJS )> Linux
+>
+> sudo apt update && apt install nodejs
+>
+> #### Starting )>
+>
 > npm install && node start.js
 >
 > ### **Termux**
 >
-> sudo apt update && apt install nodejs-lts && npm install && node start.js
+> apt upgrade && apt install nodejs && npm install && node start.js
