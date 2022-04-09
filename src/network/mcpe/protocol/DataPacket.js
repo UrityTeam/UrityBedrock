@@ -79,7 +79,7 @@ class DataPacket extends NetworkBinaryStream {
 	}
 
 	/**
-	 * @param handle {PlayerNetworkSession}
+	 * @param {PlayerNetworkSession} handle
 	 */
 	handle(handle) {
 		return false;

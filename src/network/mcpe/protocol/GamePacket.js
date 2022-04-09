@@ -76,11 +76,15 @@ class GamePacket extends DataPacket {
 	}
 
 	getPackets() {
-		let pks = [];
+		let packets = [];
+		let count = 0;
 		while (!this.payload.feos()) {
-			pks.push(this.payload.read(this.payload.readVarInt()));
+			if(count++ >= 500){
+				throw new Error("Too many packets");
+			}
+			packets.push(this.payload.read(this.payload.readVarInt()));
 		}
-		return pks;
+		return packets;
 	}
 
 	handle(handler) {
