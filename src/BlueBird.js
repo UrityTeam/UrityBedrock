@@ -13,13 +13,13 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const Info = require("./Info");
+require("./Info");
 const Path = require("path");
 const Server = require("./Server");
 
 class BlueBird {
 	constructor() {
-		new Server(Path.normalize(__dirname + "/../"), Info.NAME, Info.VERSION);
+		new Server(Path.normalize(__dirname + "/../"), NAME, VERSION);
 	}
 }
 

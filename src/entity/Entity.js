@@ -13,7 +13,7 @@
  * \ @author BlueBirdMC Team /            *
  \******************************************/
 
-const { Vector3 } = require("bbmc-math");
+const Vector3 = require("../math/Vector3");
 
 class Entity extends Vector3 {
 

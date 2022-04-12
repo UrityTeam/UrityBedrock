@@ -91,7 +91,7 @@ class GamePacket extends DataPacket {
 		if (this.payload.buffer.length === 0) {
 			return false;
 		}
-		this.getPackets().forEach((buf) => {
+		this.getPackets().forEach(buf => {
 			let pk = PacketPool.getPacket(buf[0]);
 			if (pk instanceof DataPacket) {
 				if (!pk.canBeBatched) {
