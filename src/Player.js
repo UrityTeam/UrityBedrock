@@ -26,7 +26,6 @@ const CreativeContentPacket = require("./network/mcpe/protocol/CreativeContentPa
 const TextPacket = require("./network/mcpe/protocol/TextPacket");
 const SetTitlePacket = require("./network/mcpe/protocol/SetTitlePacket");
 const DisconnectPacket = require("./network/mcpe/protocol/DisconnectPacket");
-const PlayerSkinPacket = require("./network/mcpe/protocol/PlayerSkinPacket");
 const UUID = require("./utils/UUID");
 const SkinAdapterSingleton = require("./network/mcpe/protocol/types/SkinAdapterSingleton");
 const SkinImage = require("./network/mcpe/protocol/types/SkinImage");

@@ -102,7 +102,7 @@ class GamePacket extends DataPacket {
 				handler.handleDataPacket(pk);
 			} else {
 				if(_DEBUG === true){
-					console.log(`MINECRAFT PACKET: 0x${buf.slice(0, 1).toString("hex")}`);
+					console.log(`UNHANDLED PACKET: 0x${buf.slice(0, 1).toString("hex")}`);
 					console.log(buf);
 				}
 			}

@@ -30,8 +30,9 @@ class LegacySkinAdapter {
 		return new SkinData(
 			skin.getSkinId(),
 			"", //playfabid
-			JSON.stringify({"geometry": {"default": geometryName}}),
-			SkinImage.fromLegacy(skin.getSkinData()), [],
+			JSON.stringify({ "geometry": { "default": geometryName } }),
+			SkinImage.fromLegacy(skin.getSkinData()),
+			[],
 			capeImage,
 			skin.getGeometryData()
 		);
@@ -45,7 +46,7 @@ class LegacySkinAdapter {
 		let capeData = data.isPersonaCapeOnClassic() ? "" : data.getCapeImage().getData();
 
 		let geometryName = "";
-		let resourcePatch = JSON.parse(data.getResourcePatch(), true);
+		let resourcePatch = JSON.parse(data.getResourcePatch());
 
 		if (resourcePatch.constructor === Object && typeof resourcePatch['geometry']['default'] !== 'undefined' && typeof resourcePatch['geometry']['default'] === 'string') {
 			geometryName = resourcePatch['geometry']['default'];

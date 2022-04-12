@@ -16,7 +16,7 @@
 const FileSystem = require("fs");
 const Path = require("path");
 
-class Config {
+class Config { //todo: someone make a new one cant rn
 	static DETECT = 0;
 	static JSON = 1;
 
