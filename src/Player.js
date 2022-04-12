@@ -427,6 +427,10 @@ class Player extends Many(Human, CommandSender) {
 		this.connection.disconnect(reason);
 	}
 
+	kick(reason, by){
+		this.close(`Kicked by ${by}, reason: ${reason}`);
+	}
+
 	/**
 	 * @returns {string}
 	 */

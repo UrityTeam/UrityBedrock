@@ -14,7 +14,7 @@ class KickCommand extends Command {
         }
 		let player = server.getPlayerByPrefix(args[0]);
         if(player !== null && player.isConnected()){
-            player.close(args.slice(1).join(" "));
+            player.kick(args.slice(1).join(" "), sender.getName());
         }
 	}
 }
