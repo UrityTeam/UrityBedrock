@@ -65,7 +65,7 @@ class Server {
 			};
 			fs.writeFileSync("BlueBird.json", JSON.stringify(content, null, 4));
 		}
-		this.bluebirdcfg = new Config("BlueBird.json", Config.JSON);
+		this.bluebirdcfg = new Config("BlueBird.json", Config.TYPE_JSON);
 		this.getLogger().info(`This server is running ${serverName}, v${serverVersion}`);
 		this.getLogger().info(`${serverName} is distributed under GPLv3 License`);
 		let addrname = this.bluebirdcfg.getNested("address.name");
