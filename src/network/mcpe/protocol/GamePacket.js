@@ -101,8 +101,10 @@ class GamePacket extends DataPacket {
 				pk.offset = 1;
 				handler.handleDataPacket(pk);
 			} else {
-				// console.log(`MINECRAFT PACKET: 0x${buf.slice(0, 1).toString("hex")}`);
-				// console.log(buf);
+				if(_DEBUG === true){
+					console.log(`MINECRAFT PACKET: 0x${buf.slice(0, 1).toString("hex")}`);
+					console.log(buf);
+				}
 			}
 		});
 		return true;
