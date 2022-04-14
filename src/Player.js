@@ -33,7 +33,6 @@ const SkinAnimation = require("./network/mcpe/protocol/types/SkinAnimation");
 const PersonaSkinPiece = require("./network/mcpe/protocol/types/PersonaSkinPiece");
 const PersonaPieceTintColor = require("./network/mcpe/protocol/types/PersonaPieceTintColor");
 const SkinData = require("./network/mcpe/protocol/types/SkinData");
-const AvailableActorIdentifiersPacket = require("./network/mcpe/protocol/AvailableActorIdentifiersPacket");
 const Utils = require("./utils/Utils");
 const Skin = require("./entity/Skin");
 const { Connection } = require("bbmc-raknet");
@@ -237,7 +236,6 @@ class Player extends Human {
 				this.sendDataPacket(start_game_packet);
 
 				this.sendDataPacket(new BiomeDefinitionListPacket());
-				this.sendDataPacket(new AvailableActorIdentifiersPacket());
 				this.sendDataPacket(new CreativeContentPacket());
 
 				this.sendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
