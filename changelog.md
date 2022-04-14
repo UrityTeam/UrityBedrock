@@ -1,3 +1,6 @@
+#### 1.0.6
+idk many changes?
+
 #### 1.0.5
 doc string
 

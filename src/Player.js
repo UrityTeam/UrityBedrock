@@ -40,11 +40,9 @@ const { Connection } = require("bbmc-raknet");
 const Server = require("./Server");
 const LoginPacket = require("./network/mcpe/protocol/LoginPacket");
 const DataPacket = require("./network/mcpe/protocol/DataPacket");
-const CommandSender = require("./command/CommandSender");
-const Many = require("extends-classes");
 const Human = require("./entity/Human");
 
-class Player extends Many(Human, CommandSender) {
+class Player extends Human {
 
 	/** @type {string} */
 	username = "";

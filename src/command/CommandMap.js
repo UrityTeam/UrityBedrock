@@ -1,3 +1,4 @@
+const Player = require("../Player");
 const TextFormat = require("../utils/TextFormat");
 const CommandSender = require("./CommandSender");
 const ConsoleCommandSender = require("./ConsoleCommandSender");
@@ -43,7 +44,7 @@ class CommandMap {
 
         if(this.has(cmd)){
             let command = this.get(cmd);
-            if(sender instanceof CommandSender){
+            if(sender instanceof CommandSender || sender instanceof Player){
                 command.execute(sender, args);
             }
         }else{
