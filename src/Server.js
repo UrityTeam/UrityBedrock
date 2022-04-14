@@ -19,11 +19,12 @@ const Logger = require("./utils/MainLogger");
 const fs = require("fs");
 const CommandMap = require("./command/CommandMap");
 const CommandRegisterer = require("./command/CommandRegisterer");
-const ConsoleCommandReader = require("./command/ConsoleCommandReader");
 const Player = require("./Player");
 const MainLogger = require("./utils/MainLogger");
 const RakNetHandler = require("./network/RakNetHandler");
 const CommandSender = require("./command/CommandSender");
+const ConsoleCommandSender = require("./command/ConsoleCommandSender");
+const readline = require("readline");
 
 class Server {
 	/** @type {MainLogger} */
@@ -47,7 +48,6 @@ class Server {
 		this.logger = new Logger();
 		this.commandMap = new CommandMap();
 		new CommandRegisterer(this);
-		new ConsoleCommandReader(this);
 		this.dataPath = dataPath;
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
@@ -77,6 +77,15 @@ class Server {
 		}
 		this.getLogger().info(`Server listened on ${addrname}:${addrport}, IpV: ${addrversion}`);
 		this.getLogger().info(`Done in ${(Date.now() - start_time)}ms.`);
+		let sender = new ConsoleCommandSender(this);
+
+        let rl = readline.createInterface({
+            input: process.stdin
+        });
+
+        rl.on("line", (input) => {
+            this.dispatchCommand(sender, input);
+        });
 	}
 
 	/**
