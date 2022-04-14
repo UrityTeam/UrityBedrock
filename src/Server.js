@@ -78,14 +78,14 @@ class Server {
 		this.getLogger().info(`Server listened on ${addrname}:${addrport}, IpV: ${addrversion}`);
 		this.getLogger().info(`Done in ${(Date.now() - start_time)}ms.`);
 		let sender = new ConsoleCommandSender(this);
+		
+		let rl = readline.createInterface({
+			input: process.stdin
+		});
 
-        let rl = readline.createInterface({
-            input: process.stdin
-        });
-
-        rl.on("line", (input) => {
-            this.dispatchCommand(sender, input);
-        });
+		rl.on("line", (input) => {
+			this.dispatchCommand(sender, input);
+		});
 	}
 
 	/**
