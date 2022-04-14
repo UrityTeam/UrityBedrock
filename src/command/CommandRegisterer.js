@@ -7,11 +7,11 @@ const TitleCommand = require("./default/TitleCommand");
 class CommandRegisterer {
     constructor(server){
         let commandMap = server.getCommandMap();
-        commandMap.register(new StopCommand);
-        commandMap.register(new SayCommand);
-        commandMap.register(new TitleCommand);
-        commandMap.register(new HelpCommand);
-        commandMap.register(new KickCommand);
+        commandMap.register(StopCommand);
+        commandMap.register(SayCommand);
+        commandMap.register(TitleCommand);
+        commandMap.register(HelpCommand);
+        commandMap.register(KickCommand);
     }
 }
 

@@ -7,6 +7,7 @@ class CommandMap {
     static list = {};
 
     register(command){
+        command = new command;
         if(!(command.getName() in CommandMap.list)){
             CommandMap.list[command.getName()] = command;
         }
