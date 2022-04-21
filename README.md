@@ -15,6 +15,6 @@ https://discord.gg/KQCYsxAD2b
 >
 > apt upgrade && apt install nodejs && npm install && node start.js
 
-if apt install nodejs did not work type
+if ``apt install nodejs`` did not work type
 
 > apt install nodejs-lts
