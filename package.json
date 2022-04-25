@@ -7,8 +7,8 @@
     "test": "node start.js"
   },
   "dependencies": {
-    "bbmc-binarystream": "git+https://github.com/BlueBirdMC/BinaryStream.git",
-    "bbmc-raknet": "git+https://github.com/BlueBirdMC/RakNet.git"
+    "bbmc-binarystream": "^1.0.0",
+    "bbmc-raknet": "^1.0.0"
   },
   "author": "BlueBirdMC Team",
   "license": "GPL-3.0",
