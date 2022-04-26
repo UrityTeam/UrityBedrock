@@ -1,5 +1,5 @@
 const Player = require("../Player");
-const TextFormat = require("../utils/TextFormat");
+const { TextFormat } = require("../utils/TextFormat");
 const CommandSender = require("./CommandSender");
 const ConsoleCommandSender = require("./ConsoleCommandSender");
 
