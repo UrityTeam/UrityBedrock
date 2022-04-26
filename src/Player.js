@@ -19,7 +19,7 @@ const PlayStatusPacket = require("./network/mcpe/protocol/PlayStatusPacket");
 const StartGamePacket = require("./network/mcpe/protocol/StartGamePacket");
 const ResourcePackClientResponsePacket = require("./network/mcpe/protocol/ResourcePackClientResponsePacket");
 const ResourcePackStackPacket = require("./network/mcpe/protocol/ResourcePackStackPacket");
-const TextFormat = require("./utils/TextFormat");
+const { TextFormat } = require("./utils/TextFormat");
 const ResourcePacksInfoPacket = require("./network/mcpe/protocol/ResourcePacksInfoPacket");
 const BiomeDefinitionListPacket = require("./network/mcpe/protocol/BiomeDefinitionListPacket");
 const CreativeContentPacket = require("./network/mcpe/protocol/CreativeContentPacket");
@@ -94,15 +94,16 @@ class Player extends Human {
 	 * @param {string} newSkinName 
 	 * @returns {void}
 	 */
-	changeSkin(skin, oldSkinName, newSkinName) {
-		if (!skin.isValid()) {
-			return;
-		}
+	changeSkin(skin, oldSkinName, newSkinName) { //todo: skin is invaild cuz of the capedata
+		// if (!skin.isValid()) {
+		// 	return;
+		// }
 
 		// this.server.broadcastMessage(`${this.getName()} changed his skin from ${oldSkinName} to ${newSkinName}`);
+		this.server.broadcastMessage(`${this.getName()} skin changed from ${oldSkinName} to ${newSkinName} <NOT IMPLEMENTED>`);
 
-		this.setSkin(skin);
-		this.sendSkin(this.server.getOnlinePlayers());
+		// this.setSkin(skin);
+		// this.sendSkin(this.server.getOnlinePlayers());
 	}
 
 	/**
@@ -320,7 +321,6 @@ class Player extends Human {
 				}
 				let msg = "<:player> :message".replace(":player", this.getName()).replace(":message", messageElement);
 				this.server.broadcastMessage(msg);
-				this.server.getLogger().info(msg);
 			}
 		}
 	}

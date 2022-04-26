@@ -165,4 +165,4 @@ class TerminalColors {
 	static RESET = TerminalColors.ESCAPE + "[0m";
 }
 
-module.exports = TextFormat;
+module.exports = {TextFormat, TerminalColors};

@@ -13,7 +13,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const TextFormat = require("./TextFormat");
+const { TextFormat } = require("./TextFormat");
 
 class MainLogger {
 	/** @type {number} */
@@ -103,7 +103,7 @@ class MainLogger {
 		message = TextFormat.toTerminal(message);
 		let date = new Date();
 		let timeString = date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString();
-		console.log(`${TextFormat.toTerminal(TextFormat.BLUE)}[${timeString}]${TextFormat.toTerminal(TextFormat.RESET)}${color} ${type} >`, message + TextFormat.toTerminal(TextFormat.RESET));
+		console.log(`${TextFormat.toTerminal(TextFormat.RESET)}${color}${type}${TextFormat.toTerminal(TextFormat.BLUE)}[${timeString}]${TextFormat.toTerminal(TextFormat.RESET)}${color} >`, message + TextFormat.toTerminal(TextFormat.RESET));
 		return true;
 	}
 

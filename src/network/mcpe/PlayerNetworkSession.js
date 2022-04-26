@@ -13,10 +13,11 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const TextFormat = require("../../utils/TextFormat");
+const { TextFormat } = require("../../utils/TextFormat");
 const DataPacket = require("./protocol/DataPacket");
 const TextPacket = require("./protocol/TextPacket");
 const SkinAdapterSingleton = require("./protocol/types/SkinAdapterSingleton");
+const Player = require("../../Player");
 
 class PlayerNetworkSession {
 	/** @type {Server} */
