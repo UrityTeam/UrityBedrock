@@ -37,6 +37,10 @@ class Server {
 	bluebirdcfg;
 	/** @type {CommandMap} */
 	commandMap;
+	/** @type {string} */
+	serverName;
+	/** @type {string} */
+	serverVersion;
 
 	/**
 	 * @param {string} dataPath 
@@ -44,11 +48,18 @@ class Server {
 	 * @param {string} serverVersion
 	 */
 	constructor(dataPath, serverName, serverVersion) {
-		let start_time = Date.now();
 		this.logger = new Logger();
 		this.commandMap = new CommandMap();
-		new CommandRegisterer(this);
 		this.dataPath = dataPath;
+		this.serverName = serverName;
+		this.serverVersion = serverVersion;
+	}
+
+	/**
+	 * @returns {void}
+	 */
+	start(){
+		let start_time = Date.now();
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
 		if (!fs.existsSync("BlueBird.json")) {
@@ -66,19 +77,22 @@ class Server {
 			fs.writeFileSync("BlueBird.json", JSON.stringify(content, null, 4));
 		}
 		this.bluebirdcfg = new Config("BlueBird.json", Config.TYPE_JSON);
-		this.getLogger().info(`This server is running ${serverName}, v${serverVersion}`);
-		this.getLogger().info(`${serverName} is distributed under GPLv3 License`);
+		this.getLogger().info(`This server is running ${this.serverName}, v${this.serverVersion}`);
+		this.getLogger().info(`${this.serverName} is distributed under GPLv3 License`);
 		let addrname = this.bluebirdcfg.getNested("address.name");
 		let addrport = this.bluebirdcfg.getNested("address.port");
 		let addrversion = this.bluebirdcfg.getNested("address.version");
+
 		this.raknet = new RakNetHandler(this, addrname, addrport, addrversion);
 		if (this.raknet.raknet.isRunning === true) {
 			this.raknet.handle();
 		}
+
 		this.getLogger().info(`Server listened on ${addrname}:${addrport}, IpV: ${addrversion}`);
-		this.getLogger().info(`Done in ${(Date.now() - start_time)}ms.`);
+
+		CommandRegisterer.init(this);
+
 		let sender = new ConsoleCommandSender(this);
-		
 		let rl = readline.createInterface({
 			input: process.stdin
 		});
@@ -86,6 +100,7 @@ class Server {
 		rl.on("line", (input) => {
 			this.dispatchCommand(sender, input);
 		});
+		this.getLogger().info(`Done in ${(Date.now() - start_time)}ms.`);
 	}
 
 	/**

@@ -5,7 +5,7 @@ const StopCommand = require("./default/StopCommand");
 const TitleCommand = require("./default/TitleCommand");
 
 class CommandRegisterer {
-    constructor(server){
+    static init(server){
         let commandMap = server.getCommandMap();
         commandMap.register(StopCommand);
         commandMap.register(SayCommand);

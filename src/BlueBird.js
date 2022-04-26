@@ -19,7 +19,8 @@ const Server = require("./Server");
 
 class BlueBird {
 	constructor() {
-		new Server(Path.normalize(__dirname + "/../"), NAME, VERSION);
+		let server = new Server(Path.normalize(__dirname + "/../"), NAME, VERSION);
+		server.start();
 	}
 }
 
