@@ -1,4 +1,4 @@
-const TextFormat = require("../../utils/TextFormat");
+const { TextFormat } = require("../../utils/TextFormat");
 const Command = require("../Command");
 
 class KickCommand extends Command {
