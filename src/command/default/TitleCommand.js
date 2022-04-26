@@ -1,5 +1,5 @@
 const SetTitlePacket = require("../../network/mcpe/protocol/SetTitlePacket");
-const TextFormat = require("../../utils/TextFormat");
+const { TextFormat } = require("../../utils/TextFormat");
 const Command = require("../Command");
 
 class TitleCommand extends Command {
