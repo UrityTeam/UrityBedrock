@@ -75,7 +75,7 @@ class DataPacket extends NetworkBinaryStream {
 
 	clean() {
 		this.isEncoded = false;
-		super.reset();
+		this.reset();
 	}
 
 	/**
