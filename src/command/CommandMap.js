@@ -29,7 +29,7 @@ class CommandMap {
 
     unregisterArray(arr){
         arr.forEach(commandNames => {
-            if (!(commandNames in CommandMap.list)){
+            if (commandNames in CommandMap.list){
                 delete CommandMap.list[commandNames];
             }
         });
