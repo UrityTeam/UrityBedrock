@@ -19,6 +19,22 @@ class CommandMap {
         }
     }
 
+    registerArray(arr){
+        arr.forEach(commands => {
+            if(!(commands.getName() in CommandMap.list)){
+                CommandMap.list[commands.getName()] = commands;
+            }
+        });
+    }
+
+    unregisterArray(arr){
+        arr.forEach(commandNames => {
+            if (!(commandNames in CommandMap.list)){
+                delete CommandMap.list[commandNames];
+            }
+        });
+    }
+
     has(commandName){
         if(!(commandName in CommandMap.list)){
             return false;

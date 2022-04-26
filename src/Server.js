@@ -18,7 +18,7 @@ const Config = require("./utils/Config");
 const Logger = require("./utils/MainLogger");
 const fs = require("fs");
 const CommandMap = require("./command/CommandMap");
-const CommandRegisterer = require("./command/CommandRegisterer");
+const DefaultCommandLoader = require("./command/DefaultCommandLoader");
 const Player = require("./Player");
 const MainLogger = require("./utils/MainLogger");
 const RakNetHandler = require("./network/RakNetHandler");
@@ -90,7 +90,7 @@ class Server {
 
 		this.getLogger().info(`Server listened on ${addrname}:${addrport}, IpV: ${addrversion}`);
 
-		CommandRegisterer.init(this);
+		DefaultCommandLoader.init(this);
 
 		let sender = new ConsoleCommandSender(this);
 		let rl = readline.createInterface({
