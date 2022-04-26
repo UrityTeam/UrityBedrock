@@ -25,8 +25,6 @@ const DataPacket = require("./mcpe/protocol/DataPacket");
 class RakNetHandler {
 	/** @type {MainLogger} */
 	logger;
-	/** @type {PlayerList} */
-	players;
 	/** @type {RakNetServer, EventEmitter} */
 	raknet;
 	/** @type {Server} */
@@ -96,6 +94,8 @@ class RakNetHandler {
 
 		this.raknet.on('disconnect', (address) => {
 			if (address.toString() in this.players) {
+				let player = this.players[address.toString()];
+				player.close("", "client disconnection", true); //for disconnection msg
 				delete this.players[address.toString()];
 			}
 		});

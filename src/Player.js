@@ -302,8 +302,8 @@ class Player extends Human {
 		packsInfo.forceServerPacks = false;
 		this.sendDataPacket(packsInfo);
 
-		this.server.getLogger().info(`Player ${this.username} joined the game`);
-		this.server.broadcastMessage(`§ePlayer ${this.username} joined the game`);
+		this.server.getLogger().info(`new connection NAME=${this.username} ADDRESS=${this.connection.address.toString()}`);
+		this.server.broadcastMessage(`${TextFormat.GRAY}[${TextFormat.DARK_GREEN}+${TextFormat.GRAY}]${TextFormat.RESET}${TextFormat.WHITE} ${this.username}`);
 	}
 
 	/**
@@ -319,7 +319,7 @@ class Player extends Human {
 					//TODO: Send Command Packet
 					return;
 				}
-				let msg = "<:player> :message".replace(":player", this.getName()).replace(":message", messageElement);
+				let msg = "<:player> :message".replace(":player", this.username).replace(":message", messageElement);
 				this.server.broadcastMessage(msg);
 			}
 		}
@@ -409,21 +409,24 @@ class Player extends Human {
 	}
 
 	/**
-	 * @param {string} reason 
-	 * @param {Boolean} hide_disconnection_screen 
+	 * @param {string} message
+	 * @param {string} reason
+	 * @param {bool} onlymsg
 	 */
-	close(reason, hide_disconnection_screen = false) {
+	close(message = "", reason = "no reason", onlymsg = false) {
 		this.server.getLogger().info("Player " + this.username + " disconnected due to " + reason);
-		this.server.broadcastMessage("§ePlayer " + this.username + " left the game");
-		let pk = new DisconnectPacket();
-		pk.hideDisconnectionScreen = hide_disconnection_screen;
-		pk.message = reason;
-		this.sendDataPacket(pk);
-		this.connection.disconnect(reason);
+		this.server.broadcastMessage(message === "" ? `${TextFormat.GRAY}[${TextFormat.DARK_RED}-${TextFormat.GRAY}]${TextFormat.RESET}${TextFormat.WHITE} ${this.username}` : message);
+		if(onlymsg === false){
+			let pk = new DisconnectPacket();
+			pk.hideDisconnectionScreen = false;
+			pk.message = reason;
+			this.sendDataPacket(pk);
+			this.connection.disconnect(reason);
+		}
 	}
 
 	kick(reason, by){
-		this.close(`Kicked by ${by}, reason: ${reason}`);
+		this.close("", `Kicked by ${by}, reason: ${reason}`);
 	}
 
 	/**
