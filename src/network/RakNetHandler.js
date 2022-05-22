@@ -32,7 +32,7 @@ class RakNetHandler {
 	/** @type {Object} */
 	players = {};
 
-	static MCPE_PROTOCOL_VERSION = 10;
+	static MCPE_LASTEST_RAKNET_PROTOCOL_VERSION = 10;
 
 	/**
 	 * 
@@ -45,11 +45,9 @@ class RakNetHandler {
 		PacketPool.init();
 		this.server = server;
 		this.logger = new Logger();
-		this.raknet = new RakNetServer(new InternetAddress(
-			AddrName,
-			AddrPort,
-			AddrVersion),
-			RakNetHandler.MCPE_PROTOCOL_VERSION
+		this.raknet = new RakNetServer(
+			new InternetAddress(AddrName, AddrPort, AddrVersion),
+			RakNetHandler.MCPE_LASTEST_RAKNET_PROTOCOL_VERSION
 		);
 		this.logger.setDebuggingLevel(this.server.bluebirdcfg.get("debug_level"));
 	}
