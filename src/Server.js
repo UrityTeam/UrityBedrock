@@ -58,7 +58,7 @@ class Server {
 	/**
 	 * @returns {void}
 	 */
-	start(){
+	start() {
 		let start_time = Date.now();
 		this.getLogger().info("Loading server...");
 		this.getLogger().info("Loading BlueBird.json");
@@ -106,7 +106,7 @@ class Server {
 	/**
 	 * @returns {CommandMap}
 	 */
-	getCommandMap(){
+	getCommandMap() {
 		return this.commandMap;
 	}
 
@@ -116,7 +116,7 @@ class Server {
 	 * @param {CommandSender} sender 
 	 * @param {string} cmd 
 	 */
-	dispatchCommand(sender, cmd){
+	dispatchCommand(sender, cmd) {
 		this.commandMap.dispatch(sender, cmd);
 	}
 
@@ -124,7 +124,7 @@ class Server {
 	 * @param {string} name 
 	 * @returns {Player}
 	 */
-	getPlayerByPrefix(name){
+	getPlayerByPrefix(name) {
 		const player = this.getOnlinePlayers().find(player => player.getName().toLowerCase().startsWith(name.toLowerCase()));
 
 		if (player === false){
@@ -138,7 +138,7 @@ class Server {
 	 * @param {string} name 
 	 * @returns {Player}
 	 */
-	getPlayerByFullName(name){
+	getPlayerByFullName(name) {
 		const player = this.getOnlinePlayers().find(player => player.getName() === name);
 
 		if (player === false){
