@@ -13,7 +13,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-require("./Info");
+require("./ServerInfo");
 const Path = require("path");
 const Server = require("./Server");
 
