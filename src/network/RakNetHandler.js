@@ -101,10 +101,17 @@ class RakNetHandler {
 		this.raknet.on('packet', (stream, connection) => {
 			if(connection.address.toString() in this.players){
 				let player = this.players[connection.address.toString()];
-				let packet = new GamePacket();
-				packet.buffer = stream.buffer;
-				packet.decode();
-				packet.handle(player.getNetworkSession());
+				try {
+					if (stream.readUnsignedByte() !== 0xFE) {
+						throw new Error("not mcpk");
+					}
+					let packet = new GamePacket();
+					packet.buffer = stream.buffer;
+					packet.decode();
+					packet.handle(player.getNetworkSession());
+				} catch (e) {
+					this.close(connection.address, "error");
+				}
 			}
 		});
 	}
