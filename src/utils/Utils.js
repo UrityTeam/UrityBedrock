@@ -15,9 +15,9 @@
 
 class Utils {
 	static decodeJWT(token) {
-		let [headB64, payloadB64, sigB64] = token.split(".");
+		let [header, payload, signature] = token.split(".");
 
-		return JSON.parse(Utils.base64_decode(payloadB64.replace(/-/g, "+").replace(/_/g, "/"), true));
+		return JSON.parse(Utils.base64_decode(payload.replace(/-/g, "+").replace(/_/g, "/"), true));
 	}
 
 	/**
