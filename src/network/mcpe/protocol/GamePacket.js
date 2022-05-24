@@ -48,7 +48,7 @@ class GamePacket extends DataPacket {
 				maxOutputLength: 1024 * 1024 * 2
 			}));
 		} catch (e) {
-			console.log(e); //zlib decode error
+			throw new Error(e); //zlib decode error
 		}
 	}
 
