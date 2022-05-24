@@ -23,8 +23,8 @@ const NetworkBinaryStream = require("../../NetworkBinaryStream");
 class GamePacket extends DataPacket {
 	static NETWORK_ID = Identifiers.GAME_PACKET;
 
-	/** @type {NetworkBinaryStream} */
-	payload = new NetworkBinaryStream();
+	/** @type {NetworkBinaryStream|Buffer} */
+	payload = Buffer.alloc(0);
 
 	/** @type {number} */
 	compressionLevel = 7;
@@ -48,9 +48,7 @@ class GamePacket extends DataPacket {
 				maxOutputLength: 1024 * 1024 * 2
 			}));
 		} catch (e) {
-			//zlib decode error
-			console.log(e);
-			this.payload = new NetworkBinaryStream();
+			console.log(e); //zlib decode error
 		}
 	}
 
@@ -59,6 +57,7 @@ class GamePacket extends DataPacket {
 	}
 
 	encodePayload() {
+		if (!this.payload instanceof NetworkBinaryStream) return;
 		let buf = Zlib.deflateRawSync(this.payload.buffer, {level: this.compressionLevel});
 		this.write(buf);
 	}
@@ -88,7 +87,9 @@ class GamePacket extends DataPacket {
 	}
 
 	handle(handler) {
-		if (this.payload.buffer.length === 0) {
+		if (this.payload instanceof NetworkBinaryStream && this.payload.buffer.length === 0) {
+			return false;
+		} elseif (this.payload instanceof Buffer) {
 			return false;
 		}
 		this.getPackets().forEach(buf => {
