@@ -122,7 +122,7 @@ class RakNetHandler {
 	 */
 	close(address, reason) {
 		if (address.toString() in this.players) {
-			this.players[address.toString()].disconnect(reason);
+			this.players[address.toString()].connection.disconnect(reason);
 		}
 	}
 

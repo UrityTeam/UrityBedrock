@@ -15,6 +15,7 @@
 
 const DataPacket = require("./DataPacket");
 const Identifiers = require("./Identifiers");
+const UUID = require("../../../utils/UUID")
 
 class StartGamePacket extends DataPacket {
 	static NETWORK_ID = Identifiers.START_GAME_PACKET;
@@ -36,7 +37,7 @@ class StartGamePacket extends DataPacket {
 		this.writeFloatLE(0.0); // Pitch
 		this.writeFloatLE(0.0); // Yaw
 
-		this.writeLongLE(BigInt(0)); // Seed
+		this.writeLongLE(0n); // Seed
 		this.writeShortLE(0); // Biome type
 		this.writeString(""); // Biome name
 		this.writeSignedVarInt(0); // Dimension
@@ -89,7 +90,7 @@ class StartGamePacket extends DataPacket {
 		this.writeSignedVarInt(0); // Movement authority
 		this.writeSignedVarInt(0); // Rewind history
 		this.writeBool(false); // Server authoritative block breaking
-		this.writeLongLE(BigInt(0)); // Current tick
+		this.writeLongLE(0n); // Current tick
 
 		this.writeSignedVarInt(0); // Enchantment seed
 
@@ -99,7 +100,9 @@ class StartGamePacket extends DataPacket {
 		this.writeString(""); // Multiplayer correction id
 		this.writeBool(false); // Server authoritative inventory
 		this.writeString("BlueBird"); // Engine
-		this.writeLongLE(BigInt(0)); // Block palette checksum
+		this.write(Buffer.from("", "base64")); // player prop
+		this.writeLongLE(0n); // Block palette checksum
+		this.writeUUID(new UUID()); // world template id
 	}
 }
 

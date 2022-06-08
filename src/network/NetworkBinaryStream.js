@@ -55,12 +55,10 @@ class NetworkBinaryStream extends require("bbmc-binarystream") {
 	 * @return {UUID}
 	 */
 	readUUID() {
-		let [p1, p0, p3, p2] = [
-			this.readIntLE(),
-			this.readIntLE(),
-			this.readIntLE(),
-			this.readIntLE(),
-		];
+		let p1 = this.readIntLE();
+		let p0 = this.readIntLE();
+		let p3 = this.readIntLE();
+		let p2 = this.readIntLE();
 
 		return new UUID(p0, p1, p2, p3);
 	}
