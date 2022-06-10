@@ -100,7 +100,7 @@ class StartGamePacket extends DataPacket {
 		this.writeString(""); // Multiplayer correction id
 		this.writeBool(false); // Server authoritative inventory
 		this.writeString("BlueBird"); // Engine
-		this.write(Buffer.alloc(0)); // player properties
+		this.writeVarInt(0); // player properties
 		this.writeLongLE(0n); // Block palette checksum
 		this.writeUUID(new UUID()); // world template id
 	}
