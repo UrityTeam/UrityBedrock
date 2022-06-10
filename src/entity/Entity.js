@@ -15,14 +15,15 @@
 
 const Vector3 = require("../math/Vector3");
 
-class Entity extends Vector3 {
+class Entity {
 
     static entityCount = 1;
     id;
+    position;
 
     constructor() {
-        super(0, 4, 0);
-        this.id = Entity.nextRuntimeId();
+	this.id = Entity.nextRuntimeId();
+	this.position = new Vector3(0, 5, 0);
     }
     
     static nextRuntimeId(){
