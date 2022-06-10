@@ -42,12 +42,15 @@ class Server {
 	/** @type {string} */
 	serverVersion;
 
+	static instance;
+
 	/**
 	 * @param {string} dataPath 
 	 * @param {string} serverName
 	 * @param {string} serverVersion
 	 */
 	constructor(dataPath, serverName, serverVersion) {
+		Server.instance = this;
 		this.logger = new Logger();
 		this.commandMap = new CommandMap();
 		this.dataPath = dataPath;
@@ -81,7 +84,7 @@ class Server {
 		this.getLogger().info(`${this.serverName} is distributed under GPLv3 License`);
 		let addrname = this.bluebirdcfg.getNested("address.name");
 		let addrport = this.bluebirdcfg.getNested("address.port");
-		let addrversion = this.bluebirdcfg.getNested("address.version");
+		let addrversion = this.bluebirdcfg.getNested("address.version"); // dont use config on here (u just wait)
 
 		this.raknet = new RakNetHandler(this, addrname, addrport, addrversion);
 		if (this.raknet.raknet.isRunning === true) {
@@ -118,7 +121,7 @@ class Server {
 	 */
 	dispatchCommand(sender, cmd) {
 		this.commandMap.dispatch(sender, cmd);
-	}
+	} // remove
 
 	/**
 	 * @param {string} name 
@@ -138,7 +141,7 @@ class Server {
 	 * @param {string} name 
 	 * @returns {Player}
 	 */
-	getPlayerByFullName(name) {
+	getPlayerByName(name) {
 		const player = this.getOnlinePlayers().find(player => player.getName() === name);
 
 		if (player === false){
