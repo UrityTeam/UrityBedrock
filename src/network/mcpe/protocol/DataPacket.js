@@ -85,7 +85,7 @@ class DataPacket extends NetworkBinaryStream {
 		if (!player.isConnected()) return;
 
 		if (!player.loggedIn && !this.canBeSentBeforeLogin) {
-			throw new Error(`Attempted to send ${this.getName()} to ${player.networkSession.toString()} before he got logged in`);
+			throw new Error(`Attempted to send ${this.getName()} to ${player.getNetworkSession().toString()} before he got logged in`);
 		}
 
 		Server.instance.raknet.queuePacket(player, this, immediate);
