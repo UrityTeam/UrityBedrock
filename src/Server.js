@@ -41,7 +41,7 @@ class Server {
 	serverName;
 	/** @type {string} */
 	serverVersion;
-	/** @type {Server} */
+	/** @type {Server|null} */
 	static instance = null;
 
 	/**
@@ -58,6 +58,13 @@ class Server {
 		this.dataPath = dataPath;
 		this.serverName = serverName;
 		this.serverVersion = serverVersion;
+	}
+
+	static getInstance() {
+		if (Server.instance === null) {
+			throw new Error("Instance is null");
+		}
+		return Server.instance();
 	}
 
 	/**
@@ -205,7 +212,7 @@ class Server {
 
 			targets.forEach(player => {
 				if (player.connection.address.toString() in this.raknet.players) {
-					pk.sendTo(this, immediate);
+					pk.sendTo(player, immediate);
 				}
 			});
 		});

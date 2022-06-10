@@ -14,7 +14,6 @@
 \******************************************/
 
 const NetworkBinaryStream = require("../../NetworkBinaryStream");
-const Server = require("../../../Server");
 
 class DataPacket extends NetworkBinaryStream {
 	static NETWORK_ID = 0;
@@ -88,7 +87,7 @@ class DataPacket extends NetworkBinaryStream {
 			throw new Error(`Attempted to send ${this.getName()} to ${player.getNetworkSession().toString()} before he got logged in`);
 		}
 
-		Server.instance.raknet.queuePacket(player, this, immediate);
+		player.server.raknet.queuePacket(player, this, immediate);
 	}
 
 	/**
