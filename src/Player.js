@@ -320,7 +320,6 @@ class Player extends Human {
 					// Send AvailableCommandsPacket
 					return;
 				}
-				let msg = "<:player> :message".replace(":player", this.username).replace(":message", messageElement);
 				this.server.broadcastMessage(`<${this.username}> ${messageElement}`);
 			}
 		}
