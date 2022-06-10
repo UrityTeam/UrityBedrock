@@ -213,7 +213,7 @@ class Server {
 
 			targets.forEach(player => {
 				if (player.connection.address.toString() in this.raknet.players) {
-					player.sendDataPacket(pk, immediate);
+					pk.sendTo(this, immediate);
 				}
 			});
 		});
