@@ -125,7 +125,7 @@ class Server {
 		if (player === false){
 			throw new Error(`can't find player with name: ${name}`);
 		}
-		
+
 		return player;
 	}
 
@@ -139,7 +139,7 @@ class Server {
 		if (player === false){
 			throw new Error(`can't find player with name: ${name}`);
 		}
-		
+
 		return player;
 	}
 
