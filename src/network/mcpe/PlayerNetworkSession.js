@@ -49,7 +49,7 @@ class PlayerNetworkSession {
 		packet.decode();
 
 		if (!packet.feos() && !packet.mayHaveUnreadBytes) {
-			let remains = packet.buffer.slice(packet.offset);
+			const remains = packet.buffer.slice(packet.offset);
 			this.server.logger.debug("Still " + remains.length + " bytes unread in " + packet.getName() + ": 0x" + remains.toString("hex"));
 		}
 
