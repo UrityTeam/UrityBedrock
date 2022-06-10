@@ -101,7 +101,7 @@ class Server {
 		});
 
 		rl.on("line", (input) => {
-			this.dispatchCommand(sender, input);
+			this.getCommandMap().dispatchCommand(sender, input);
 		});
 		this.getLogger().info(`Done in ${(Date.now() - start_time)}ms.`);
 	}
@@ -112,16 +112,6 @@ class Server {
 	getCommandMap() {
 		return this.commandMap;
 	}
-
-	/**
-	 * dispatch a command
-	 *
-	 * @param {CommandSender} sender 
-	 * @param {string} cmd 
-	 */
-	dispatchCommand(sender, cmd) {
-		this.commandMap.dispatch(sender, cmd);
-	} // remove
 
 	/**
 	 * @param {string} name 
