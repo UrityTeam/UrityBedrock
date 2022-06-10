@@ -233,7 +233,7 @@ class Server {
 	 */
 	broadcastMessage(message) {
 		let onlinePlayers = this.getOnlinePlayers();
-		for(let players of onlinePlayers){
+		for (const players of onlinePlayers) {
 			players.sendMessage(message);
 		}
 	}
