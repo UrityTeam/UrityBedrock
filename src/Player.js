@@ -163,7 +163,7 @@ class Player extends Human {
 			pieceTintColors.push(new PersonaPieceTintColor(tintColors["PieceType"], tintColors["Colors"]));
 		});
 
-		let skinData = new SkinData(
+		const skinData = new SkinData(
 			packet.clientData["SkinId"],
 			packet.clientData["PlayFabId"],
 			Utils.base64_decode(packet.clientData["SkinResourcePatch"] ? packet.clientData["SkinResourcePatch"] : "", true),
@@ -224,17 +224,17 @@ class Player extends Human {
 				break;
 
 			case ResourcePackClientResponsePacket.STATUS_HAVE_ALL_PACKS:
-				let resource_pack_stack_packet = new ResourcePackStackPacket();
-				resource_pack_stack_packet.resourcePackStack = [];
-				resource_pack_stack_packet.mustAccept = false;
-				this.sendDataPacket(resource_pack_stack_packet);
+				const packet = new ResourcePackStackPacket();
+				packet.resourcePackStack = [];
+				packet.mustAccept = false;
+				this.sendDataPacket(packet);
 				break;
 
 			case ResourcePackClientResponsePacket.STATUS_COMPLETED:
-				let start_game_packet = new StartGamePacket();
-				start_game_packet.entityId = this.id;
-				start_game_packet.entityRuntimeId = this.id;
-				this.sendDataPacket(start_game_packet);
+				const packet = new StartGamePacket();
+				packet.entityId = this.id;
+				packet.entityRuntimeId = this.id;
+				this.sendDataPacket(packet);
 
 				this.sendDataPacket(new BiomeDefinitionListPacket());
 				this.sendDataPacket(new CreativeContentPacket());
@@ -296,7 +296,7 @@ class Player extends Human {
 
 		this.sendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
-		let packsInfo = new ResourcePacksInfoPacket();
+		const packsInfo = new ResourcePacksInfoPacket();
 		packsInfo.resourcePackEntries = [];
 		packsInfo.mustAccept = false;
 		packsInfo.forceServerPacks = false;
@@ -366,7 +366,7 @@ class Player extends Human {
 
 	/** reset the player titles */
 	resetTitles() {
-		let pk = new SetTitlePacket();
+		const pk = new SetTitlePacket();
 		pk.type = SetTitlePacket.TYPE_RESET_TITLE;
 		this.sendDataPacket(pk);
 	}
@@ -378,7 +378,7 @@ class Player extends Human {
 	 */
 	setTitleDuration(fadeIn, stay, fadeOut) {
 		if (fadeIn >= 0 && stay >= 0 && fadeOut >= 0) {
-			let pk = new SetTitlePacket();
+			const pk = new SetTitlePacket();
 			pk.type = SetTitlePacket.TYPE_SET_ANIMATION_TIMES;
 			pk.fadeInTime = fadeIn;
 			pk.stayTime = stay;
@@ -392,7 +392,7 @@ class Player extends Human {
 	 * @param {number} type 
 	 */
 	sendTitleText(title, type) {
-		let pk = new SetTitlePacket();
+		const pk = new SetTitlePacket();
 		pk.type = type;
 		pk.text = title;
 		this.sendDataPacket(pk);
@@ -403,9 +403,9 @@ class Player extends Human {
 	 * @param {Boolean} immediate 
 	 */
 	sendPlayStatus(status, immediate = false) {
-		let play_status_packet = new PlayStatusPacket();
-		play_status_packet.status = status;
-		this.sendDataPacket(play_status_packet, immediate);
+		const packet = new PlayStatusPacket();
+		packet.status = status;
+		this.sendDataPacket(packet, immediate);
 	}
 
 	/**
@@ -417,7 +417,7 @@ class Player extends Human {
 		this.server.getLogger().info("Player " + this.username + " disconnected due to " + reason);
 		this.server.broadcastMessage(message === "" ? `${TextFormat.GRAY}[${TextFormat.DARK_RED}-${TextFormat.GRAY}]${TextFormat.RESET}${TextFormat.WHITE} ${this.username}` : message);
 		if(onlymsg === false){
-			let pk = new DisconnectPacket();
+			const pk = new DisconnectPacket();
 			pk.hideDisconnectionScreen = false;
 			pk.message = reason;
 			this.sendDataPacket(pk);
