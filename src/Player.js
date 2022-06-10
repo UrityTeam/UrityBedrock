@@ -231,10 +231,10 @@ class Player extends Human {
 				break;
 
 			case ResourcePackClientResponsePacket.STATUS_COMPLETED:
-				const packet = new StartGamePacket();
-				packet.entityId = this.id;
-				packet.entityRuntimeId = this.id;
-				packet.sendTo(this);
+				const packet1 = new StartGamePacket();
+				packet1.entityId = this.id;
+				packet1.entityRuntimeId = this.id;
+				packet1.sendTo(this);
 
 				const [biome_pk, creative_ct_pk] = [new BiomeDefinitionListPacket(), new CreativeContentPacket()];
 				biome_pk.sendTo(this);
