@@ -50,7 +50,7 @@ class Server {
 	 * @param {string} serverVersion
 	 */
 	constructor(dataPath, serverName, serverVersion) {
-		Server.instance = this;
+		Server.instance = new Server(dataPath, serverName, serverVersion);
 		this.logger = new Logger();
 		this.commandMap = new CommandMap();
 		this.dataPath = dataPath;
