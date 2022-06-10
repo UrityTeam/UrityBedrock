@@ -100,7 +100,7 @@ class Player extends Human {
 		// }
 
 		// this.server.broadcastMessage(`${this.getName()} changed his skin from ${oldSkinName} to ${newSkinName}`);
-		this.server.broadcastMessage(`${this.getName()} skin changed from ${oldSkinName} to ${newSkinName} <NOT IMPLEMENTED>`);
+		this.server.broadcastMessage(`${this.getName()} skin changed from ${oldSkinName} to ${newSkinName} <FIXME>`);
 
 		// this.setSkin(skin);
 		// this.sendSkin(this.server.getOnlinePlayers());
@@ -227,17 +227,18 @@ class Player extends Human {
 				const packet = new ResourcePackStackPacket();
 				packet.resourcePackStack = [];
 				packet.mustAccept = false;
-				this.sendDataPacket(packet);
+				packet.sendTo(this);
 				break;
 
 			case ResourcePackClientResponsePacket.STATUS_COMPLETED:
 				const packet = new StartGamePacket();
 				packet.entityId = this.id;
 				packet.entityRuntimeId = this.id;
-				this.sendDataPacket(packet);
+				packet.sendTo(this);
 
-				this.sendDataPacket(new BiomeDefinitionListPacket());
-				this.sendDataPacket(new CreativeContentPacket());
+				const [biome_pk, creative_ct_pk] = [new BiomeDefinitionListPacket(), new CreativeContentPacket()];
+				biome_pk.sendTo(this);
+				creative_ct_pk.sendTo(this);
 
 				this.sendPlayStatus(PlayStatusPacket.PLAYER_SPAWN);
 				break;
@@ -296,11 +297,11 @@ class Player extends Human {
 
 		this.sendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
-		const packsInfo = new ResourcePacksInfoPacket();
-		packsInfo.resourcePackEntries = [];
-		packsInfo.mustAccept = false;
-		packsInfo.forceServerPacks = false;
-		this.sendDataPacket(packsInfo);
+		const packet = new ResourcePacksInfoPacket();
+		packet.resourcePackEntries = [];
+		packet.mustAccept = false;
+		packet.forceServerPacks = false;
+		packet.sendTo(this);
 
 		this.server.getLogger().info(`new connection NAME=${this.username} ADDRESS=${this.connection.address.toString()}`);
 		this.server.broadcastMessage(`${TextFormat.GRAY}[${TextFormat.DARK_GREEN}+${TextFormat.GRAY}]${TextFormat.RESET}${TextFormat.WHITE} ${this.username}`);
@@ -316,11 +317,11 @@ class Player extends Human {
 			let messageElement = message[i];
 			if (messageElement.trim() !== "" && messageElement.length <= 255) {
 				if (messageElement.startsWith("/")) {
-					//TODO: Send Command Packet
+					// Send AvailableCommandsPacket
 					return;
 				}
 				let msg = "<:player> :message".replace(":player", this.username).replace(":message", messageElement);
-				this.server.broadcastMessage(msg);
+				this.server.broadcastMessage(`<${this.username}> ${messageElement}`);
 			}
 		}
 	}
@@ -332,7 +333,7 @@ class Player extends Human {
 		let pk = new TextPacket();
 		pk.type = TextPacket.TYPE_RAW;
 		pk.message = message;
-		this.sendDataPacket(pk);
+		pk.sendTo(this);
 	}
 
 	/**
@@ -361,14 +362,14 @@ class Player extends Human {
 	clearTitles() {
 		let pk = new SetTitlePacket();
 		pk.type = SetTitlePacket.TYPE_CLEAR_TITLE;
-		this.sendDataPacket(pk);
+		pk.sendTo(this);
 	}
 
 	/** reset the player titles */
 	resetTitles() {
 		const pk = new SetTitlePacket();
 		pk.type = SetTitlePacket.TYPE_RESET_TITLE;
-		this.sendDataPacket(pk);
+		pk.sendTo(this);
 	}
 
 	/**
@@ -383,7 +384,7 @@ class Player extends Human {
 			pk.fadeInTime = fadeIn;
 			pk.stayTime = stay;
 			pk.fadeOutTime = fadeOut;
-			this.sendDataPacket(pk);
+			pk.sendTo(this);
 		}
 	}
 
@@ -395,7 +396,7 @@ class Player extends Human {
 		const pk = new SetTitlePacket();
 		pk.type = type;
 		pk.text = title;
-		this.sendDataPacket(pk);
+		pk.sendTo(this);
 	}
 
 	/**
@@ -405,7 +406,7 @@ class Player extends Human {
 	sendPlayStatus(status, immediate = false) {
 		const packet = new PlayStatusPacket();
 		packet.status = status;
-		this.sendDataPacket(packet, immediate);
+		packet.sendTo(this, immediate);
 	}
 
 	/**
@@ -420,7 +421,7 @@ class Player extends Human {
 			const pk = new DisconnectPacket();
 			pk.hideDisconnectionScreen = false;
 			pk.message = reason;
-			this.sendDataPacket(pk);
+			pk.sendTo(this);
 			this.connection.disconnect(reason);
 		}
 	}
@@ -462,21 +463,6 @@ class Player extends Human {
 	 */
 	getName() {
 		return this.username;
-	}
-
-	/**
-	 * @param {DataPacket} packet 
-	 * @param {Boolean} immediate 
-	 * @returns {void}
-	 */
-	sendDataPacket(packet, immediate = false) {
-		if (!this.isConnected()) return;
-
-		if (!this.loggedIn && !packet.canBeSentBeforeLogin) {
-			throw new Error(`Attempted to send ${packet.getName()} to ${this.networkSession.toString()} before he got logged in`);
-		}
-
-		this.server.raknet.queuePacket(this, packet, immediate);
 	}
 }
 
