@@ -14,6 +14,7 @@
 \******************************************/
 
 const NetworkBinaryStream = require("../../NetworkBinaryStream");
+const Server = require("../../../Server");
 
 class DataPacket extends NetworkBinaryStream {
 	static NETWORK_ID = 0;
@@ -29,13 +30,17 @@ class DataPacket extends NetworkBinaryStream {
 	recipientSubId = 0;
 	canBeBatched = true;
 
+	canBeSentBeforeLogin = false;
+
+	mayHaveUnreadBytes = false;
+
 	getName() {
 		return this.constructor.name;
 	}
 
-	canBeSentBeforeLogin = false;
-
-	mayHaveUnreadBytes = false;
+	getId() {
+		return this.constructor.NETWORK_ID;
+	}
 
 	decode() {
 		this.offset = 0;
@@ -45,16 +50,15 @@ class DataPacket extends NetworkBinaryStream {
 
 	decodeHeader() {
 		let header = this.readVarInt();
-		let pid = header & this.constructor.PID_MASK;
-		if (pid !== this.constructor.NETWORK_ID) {
-			throw new Error(`Expected ${this.constructor.NETWORK_ID} for packet ID, got ${pid}`);
+		let pid = header & DataPacket.PID_MASK;
+		if (pid !== this.getId()) {
+			throw new Error(`Expected ${this.getId()} for packet ID, got ${pid}`);
 		}
-		this.senderSubId = (header >> this.constructor.SENDER_SUBCLIENT_ID_SHIFT) & this.constructor.SUBCLIENT_ID_MASK;
-		this.recipientSubId = (header >> this.constructor.RECIPIENT_SUBCLIENT_ID_SHIFT) & this.constructor.SUBCLIENT_ID_MASK;
+		this.senderSubId = (header >> DataPacket.SENDER_SUBCLIENT_ID_SHIFT) & DataPacket.SUBCLIENT_ID_MASK;
+		this.recipientSubId = (header >> DataPacket.RECIPIENT_SUBCLIENT_ID_SHIFT) & DataPacket.SUBCLIENT_ID_MASK;
 	}
 
-	decodePayload() {
-	}
+	decodePayload() {}
 
 	encode() {
 		this.reset();
@@ -64,18 +68,27 @@ class DataPacket extends NetworkBinaryStream {
 	}
 
 	encodeHeader() {
-		this.writeVarInt(this.constructor.NETWORK_ID |
-			(this.senderSubId << this.constructor.SENDER_SUBCLIENT_ID_SHIFT) |
-			(this.recipientSubId << this.constructor.RECIPIENT_SUBCLIENT_ID_SHIFT)
+		this.writeVarInt(this.getId() |
+			(this.senderSubId << DataPacket.SENDER_SUBCLIENT_ID_SHIFT) |
+			(this.recipientSubId << DataPacket.RECIPIENT_SUBCLIENT_ID_SHIFT)
 		);
 	}
 
-	encodePayload() {
-	}
+	encodePayload() {}
 
 	clean() {
 		this.isEncoded = false;
 		this.reset();
+	}
+
+	sendTo(player, immediate = false) {
+		if (!player.isConnected()) return;
+
+		if (!player.loggedIn && !this.canBeSentBeforeLogin) {
+			throw new Error(`Attempted to send ${this.getName()} to ${player.networkSession.toString()} before he got logged in`);
+		}
+
+		Server.instance.raknet.queuePacket(player, this, immediate);
 	}
 
 	/**
