@@ -297,11 +297,11 @@ class Player extends Human {
 
 		this.sendPlayStatus(PlayStatusPacket.LOGIN_SUCCESS);
 
-		const packet = new ResourcePacksInfoPacket();
-		packet.resourcePackEntries = [];
-		packet.mustAccept = false;
-		packet.forceServerPacks = false;
-		packet.sendTo(this);
+		const packet3 = new ResourcePacksInfoPacket();
+		packet3.resourcePackEntries = [];
+		packet3.mustAccept = false;
+		packet3.forceServerPacks = false;
+		packet3.sendTo(this);
 
 		this.server.getLogger().info(`new connection NAME=${this.username} ADDRESS=${this.connection.address.toString()}`);
 		this.server.broadcastMessage(`${TextFormat.GRAY}[${TextFormat.DARK_GREEN}+${TextFormat.GRAY}]${TextFormat.RESET}${TextFormat.WHITE} ${this.username}`);
