@@ -101,7 +101,7 @@ class Server {
 		});
 
 		rl.on("line", (input) => {
-			this.getCommandMap().dispatchCommand(sender, input);
+			this.getCommandMap().dispatch(sender, input);
 		});
 		this.getLogger().info(`Done in ${(Date.now() - start_time)}ms.`);
 	}
