@@ -102,7 +102,7 @@ class StartGamePacket extends DataPacket {
 		this.writeString("BlueBird"); // Engine
 		this.write(Buffer.from([0x0a, 0x00, 0x00])); // player properties
 		this.writeLongLE(0n); // Block palette checksum
-		this.write(Buffer.from([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])); // world template id
+		this.writeUUID(new UUID()); // world template id
 	}
 }
 
