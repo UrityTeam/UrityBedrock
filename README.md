@@ -18,3 +18,6 @@ https://discord.gg/KQCYsxAD2b
 if ``apt install nodejs`` did not work type
 
 > apt install nodejs-lts
+
+### running from vscode
+> npm install click f5
