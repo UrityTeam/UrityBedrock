@@ -14,10 +14,10 @@
 \******************************************/
 
 const DataPacket = require("./DataPacket");
-const ProtocolInfo = require("./Identifiers");
+const Identifiers = require("./Identifiers");
 
 class SetTitlePacket extends DataPacket {
-	static NETWORK_ID = ProtocolInfo.SET_TITLE_PACKET;
+	static NETWORK_ID = Identifiers.SET_TITLE_PACKET;
 
 	static TYPE_CLEAR_TITLE = 0;
 	static TYPE_RESET_TITLE = 1;

@@ -14,7 +14,7 @@
 \******************************************/
 
 const PlayerNetworkSession = require("./network/mcpe/PlayerNetworkSession");
-const ProtocolInfo = require("./network/mcpe/protocol/Identifiers");
+const Identifiers = require("./network/mcpe/protocol/Identifiers");
 const PlayStatusPacket = require("./network/mcpe/protocol/PlayStatusPacket");
 const StartGamePacket = require("./network/mcpe/protocol/StartGamePacket");
 const ResourcePackClientResponsePacket = require("./network/mcpe/protocol/ResourcePackClientResponsePacket");
@@ -38,8 +38,8 @@ const Skin = require("./entity/Skin");
 const { Connection } = require("bbmc-raknet");
 const Server = require("./Server");
 const LoginPacket = require("./network/mcpe/protocol/LoginPacket");
-const DataPacket = require("./network/mcpe/protocol/DataPacket");
 const Human = require("./entity/Human");
+const ToastRequestPacket = require("./network/mcpe/protocol/ToastRequestPacket");
 
 class Player extends Human {
 
@@ -111,8 +111,8 @@ class Player extends Human {
 	 * @returns {void}
 	 */
 	handleLogin(packet) {
-		if (packet.protocol !== ProtocolInfo.CURRENT_PROTOCOL) {
-			if (packet.protocol < ProtocolInfo.CURRENT_PROTOCOL) {
+		if (packet.protocol !== Identifiers.CURRENT_PROTOCOL) {
+			if (packet.protocol < Identifiers.CURRENT_PROTOCOL) {
 				this.sendPlayStatus(PlayStatusPacket.LOGIN_FAILED_CLIENT, true);
 			} else {
 				this.sendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER, true);
@@ -319,6 +319,20 @@ class Player extends Human {
 				if (messageElement.startsWith("/")) {
 					// Send AvailableCommandsPacket
 					return;
+				}
+				if (_DEBUG) {
+					if (messageElement.startsWith("*")) {
+						switch (messageElement.split("*")[1]) {
+							case "toast":
+								let pk = new ToastRequestPacket();
+								pk.settings = {
+									title: "Test",
+									body: "Some trash :PP"
+								};
+								pk.sendTo(this);
+								break;
+						}
+					}
 				}
 				this.server.broadcastMessage(`<${this.username}> ${messageElement}`);
 			}

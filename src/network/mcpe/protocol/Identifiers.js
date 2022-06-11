@@ -32,6 +32,7 @@ class Identifiers {
 	static SET_LOCAL_PLAYER_AS_INITIALIZED_PACKET = 0x71;
 	static AVAILABLE_ACTOR_IDENTIFIERS_PACKET = 0x77;
 	static AVAILABLE_COMMANDS_PACKET = 0x4d;
-}
+	static TOAST_REQUEST_PACKET = 0xba;
+};
 
 module.exports = Identifiers;

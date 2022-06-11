@@ -26,28 +26,30 @@ const SetTitlePacket = require("./SetTitlePacket");
 const DisconnectPacket = require("./DisconnectPacket");
 const PlayerSkinPacket = require("./PlayerSkinPacket");
 const SetLocalPlayerAsInitializedPacket = require("./SetLocalPlayerAsInitializedPacket");
+const ToastRequestPacket = require("./ToastRequestPacket");
 
 class PacketPool {
 
 	static #pool = {};
 
 	static init() {
-		this.registerPacket(LoginPacket);
-		this.registerPacket(PlayStatusPacket);
-		this.registerPacket(ResourcePacksInfoPacket);
-		this.registerPacket(ResourcePackClientResponsePacket);
-		this.registerPacket(ResourcePackStackPacket);
-		this.registerPacket(StartGamePacket);
-		this.registerPacket(BiomeDefinitionListPacket);
-		this.registerPacket(CreativeContentPacket);
-		this.registerPacket(TextPacket);
-		this.registerPacket(SetTitlePacket);
-		this.registerPacket(DisconnectPacket);
-		this.registerPacket(SetLocalPlayerAsInitializedPacket);
-		this.registerPacket(PlayerSkinPacket);
+		this.register(LoginPacket);
+		this.register(PlayStatusPacket);
+		this.register(ResourcePacksInfoPacket);
+		this.register(ResourcePackClientResponsePacket);
+		this.register(ResourcePackStackPacket);
+		this.register(StartGamePacket);
+		this.register(BiomeDefinitionListPacket);
+		this.register(CreativeContentPacket);
+		this.register(TextPacket);
+		this.register(SetTitlePacket);
+		this.register(DisconnectPacket);
+		this.register(SetLocalPlayerAsInitializedPacket);
+		this.register(PlayerSkinPacket);
+		this.register(ToastRequestPacket);
 	}
 
-	static registerPacket(packet) {
+	static register(packet) {
 		if(packet.NETWORK_ID in this.#pool){
 			throw new Error(`Trying to register already registered packet, packetid=${packet.NETWORK_ID}`);
 		}

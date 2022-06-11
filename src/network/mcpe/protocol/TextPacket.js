@@ -14,10 +14,10 @@
 \******************************************/
 
 const DataPacket = require("./DataPacket");
-const ProtocolInfo = require("./Identifiers");
+const Identifiers = require("./Identifiers");
 
 class TextPacket extends DataPacket {
-	static NETWORK_ID = ProtocolInfo.TEXT_PACKET;
+	static NETWORK_ID = Identifiers.TEXT_PACKET;
 
 	static TYPE_RAW = 0;
 
