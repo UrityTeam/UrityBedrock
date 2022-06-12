@@ -40,6 +40,7 @@ const Server = require("./Server");
 const LoginPacket = require("./network/mcpe/protocol/LoginPacket");
 const Human = require("./entity/Human");
 const ToastRequestPacket = require("./network/mcpe/protocol/ToastRequestPacket");
+const { ModalFormRequestPacket } = require("./network/mcpe/protocol/FormPackets");
 
 class Player extends Human {
 
@@ -331,7 +332,20 @@ class Player extends Human {
 								};
 								pk.sendTo(this);
 								break;
+							case "form":
+								let form = new ModalFormRequestPacket();
+								form.id = 555;
+								form.content = JSON.stringify({
+									type: "modal",
+									title: "Are u gay?",
+									content: "Yes or no",
+									button1: "Yes",
+									button2: "No"
+								});
+								form.sendTo(this);
+								break;
 						}
+						return;
 					}
 				}
 				this.server.broadcastMessage(`<${this.username}> ${messageElement}`);
