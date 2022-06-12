@@ -94,7 +94,7 @@ class Server {
 				"kick_resource_pack_required": "You must accept resource packs to join this server.",
 				"kick_invalid_skin": "Invalid skin!",
 				"kick_incompatible_protocol": "Incompatible protocol",
-				"kick_kicked": "Kicked by {by}, reason: ${reason}"
+				"kick_kicked": "Kicked by ${by}, reason: ${reason}"
 			}
 		};
 		let names = {Main: "BlueBird.json", Lang: "Lang.json"};

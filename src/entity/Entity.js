@@ -22,8 +22,8 @@ class Entity {
     position;
 
     constructor() {
-	this.id = Entity.nextRuntimeId();
-	this.position = new Vector3(0, 5, 0);
+	    this.id = Entity.nextRuntimeId();
+	    this.position = new Vector3(0, 5, 0);
     }
     
     static nextRuntimeId(){
