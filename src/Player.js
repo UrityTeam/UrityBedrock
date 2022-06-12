@@ -62,6 +62,8 @@ class Player extends Human {
 	authorized;
 	/** @type {Connection} */
 	connection;
+	/** @type {Server} */
+	server;
 
 	/**
 	 * @param {Server} server 
