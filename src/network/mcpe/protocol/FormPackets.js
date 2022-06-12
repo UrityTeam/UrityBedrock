@@ -20,7 +20,7 @@ class ModalFormRequestPacket extends DataPacket {
 	static NETWORK_ID = Identifiers.MODAL_FORM_REQUEST_PACKET;
 
 	id = -1;
-	content = "{}";
+	content = JSON.stringify({});
 
 	decodePayload() {
 		this.id = this.readVarInt();

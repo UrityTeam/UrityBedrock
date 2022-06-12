@@ -98,11 +98,12 @@ class Player extends Human {
 	 * @returns {void}
 	 */
 	changeSkin(skin, oldSkinName, newSkinName) { //todo: skin is invaild cuz of the capedata
-		// if (!skin.isValid()) {
-		// 	return;
-		// }
+		if (!skin.isValid()) {
+			return;
+		}
 
-		this.server.broadcastMessage(`${this.getName()} skin changed from ${oldSkinName} to ${newSkinName}`);
+		// this.setSkin(skin);
+		// this.sendSkin();
 	}
 
 	/**

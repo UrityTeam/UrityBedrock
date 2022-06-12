@@ -33,6 +33,7 @@ class Skin {
             this.validate();
             return true;
         } catch (e) {
+            console.log(e);
             return false;
         }
     }
@@ -52,9 +53,9 @@ class Skin {
             throw new Error("Skin id must not be empty");
         }
 
-        let length = this.#skinData.length;
-        if([4096, 4102, 8192, 16384, 65536].includes(length) === false) {
-            throw new Error(`Invalid skin data size ${length} bytes (allowed sizes: ${Skin.ACCEPTED_SKIN_SIZES.join(', ')})`);
+        const [accpeted_sizes, length] = [[4096, 4102, 8192, 16384, 65536], this.#skinData.length];
+        if(accpeted_sizes.includes(length) === false) {
+            throw new Error(`Invalid skin data size ${length} bytes (allowed sizes: ${accpeted_sizes.join(', ')})`);
         }
 
         if(this.#capeData !== "" && this.#capeData.length !== 4096) {

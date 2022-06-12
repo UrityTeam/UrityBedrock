@@ -43,7 +43,7 @@ class LegacySkinAdapter {
 			return new Skin('Standard_Custom', crypto.randomBytes(3).toString('hex') + "\xff".repeat(4096));
 		}
 
-		let capeData = data.isPersonaCapeOnClassic() ? "" : data.getCapeImage().getData();
+		let capeData = data.isPersonaCapeOnClassic() ? "" : data.getCapeImage().getData(); //data=""
 
 		let geometryName = "";
 		let resourcePatch = JSON.parse(data.getResourcePatch());
