@@ -51,15 +51,23 @@ class Server {
 	 * @param {string} serverName
 	 * @param {string} serverVersion
 	 */
-	constructor(dataPath, serverName, serverVersion) {
-		if (Server.instance === null) {
-			Server.instance = this;
-		}
+	constructor(a, c, b) {
+		this.dataPath = a;
+		this.serverName = c;
+		this.serverVersion = b;
 		this.logger = new Logger();
 		this.commandMap = new CommandMap();
-		this.dataPath = dataPath;
-		this.serverName = serverName;
-		this.serverVersion = serverVersion;
+	}
+
+	/**
+	 * @param {Object} opt 
+	 */
+	static NewInstance(opt) {
+		if (Server.instance !== null) {
+			throw new Error("Instance is not null");
+		}
+		Server.instance = new Server(opt.DataPath, opt.ServerName, opt.ServerVersion);
+		return Server.instance;
 	}
 
 	static getInstance() {
@@ -74,7 +82,7 @@ class Server {
 	 */
 	start() {
 		let start_time = Date.now();
-		this.getLogger().info("Loading server...");
+		this.getLogger().info("Loading Server...");
 		let contents = {
 			Main: {
 				"motd": "BlueBird Server",
@@ -116,7 +124,7 @@ class Server {
 			this.raknet.handle();
 		}
 
-		this.getLogger().info(`Server listened on ${addrname}:${addrport}, IpV: ${addrversion}`);
+		this.getLogger().info(`Server listened on ${addrname}:${addrport}, Address-Version: ${addrversion}`);
 
 		DefaultCommandLoader.init(this);
 
@@ -167,10 +175,10 @@ class Server {
 	}
 
 	/**
-	 * @param players {Player[]}
-	 * @param packets {DataPacket[]}
-	 * @param forceSync {Boolean}
-	 * @param immediate {Boolean}
+	 * @param  {Player[]} players
+	 * @param  {DataPacket[]} packets
+	 * @param  {Boolean} forceSync
+	 * @param  {Boolean} immediate
 	 */
 	broadcastGamePackets(players, packets, forceSync = false, immediate = false) {
 		let targets = [];
@@ -216,9 +224,9 @@ class Server {
 	}
 
 	/**
-	 * @param packets {DataPacket[]}
-	 * @param targets {Player[]}
-	 * @param immediate {Boolean}
+	 * @param {DataPacket[]} packets
+	 * @param {Player[]} targets
+	 * @param {Boolean} immediate
 	 */
 	broadcastPackets(packets, targets, immediate) {
 		packets.forEach(pk => {
@@ -235,8 +243,8 @@ class Server {
 	}
 
 	/**
-	 * @param targets {Player[]}
-	 * @param packet {DataPacket}
+	 * @param {Player[]} targets
+	 * @param {DataPacket} packet
 	 */
 	broadcastPacket(targets, packet) {
 		packet.encode();
@@ -244,11 +252,10 @@ class Server {
 	}
 
 	/**
-	 * @param message {String}
+	 * @param {String} message
 	 */
 	broadcastMessage(message) {
-		let onlinePlayers = this.getOnlinePlayers();
-		for (const players of onlinePlayers) {
+		for (const players of this.getOnlinePlayers()) {
 			players.sendMessage(message);
 		}
 	}
