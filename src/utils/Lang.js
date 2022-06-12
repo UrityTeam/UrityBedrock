@@ -16,32 +16,21 @@
  const fs = require("fs");
 
 class Lang {
-	static TYPE_JSON = 0;
-
 	file;
-	type;
 	content;
 
-	constructor(file, type, content = {}) {
-		this.#load(file, type, content);
+	constructor(file, content = {}) {
+		this.#load(file, content);
 	}
 
-	#load(file, type, content) {
+	#load(file, content) {
 		this.file = file;
-		this.type = type;
 		let nc;
 		if (!fs.existsSync(file)) {
 			this.content = content;
 			this.save();
 		} else {
-			nc = fs.readFileSync(file).toString();
-			switch(type){
-				case Lang.TYPE_JSON:
-					nc = eval(`(${nc})`);
-					break;
-				default:
-					break;
-			}
+			nc = eval(`(${fs.readFileSync(file).toString()})`);
 		}
 		this.content = Object.assign({}, content, nc);
 	}
@@ -111,15 +100,7 @@ class Lang {
 	}
 
 	save() {
-		let content;
-		switch(this.type){
-			case Lang.TYPE_JSON:
-				content = JSON.stringify(this.content, null, 4);
-				break;
-			default:
-				break;
-		}
-		fs.writeFileSync(this.file, content);
+		fs.writeFileSync(this.file, JSON.stringify(this.content, null, 4));
 	}
 }
 

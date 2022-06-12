@@ -320,8 +320,8 @@ class Player extends Human {
 					return;
 				}
 				if (_DEBUG) {
-					if (messageElement.startsWith("*")) {
-						switch (messageElement.split("*")[1]) {
+					if (messageElement.startsWith(".")) {
+						switch (messageElement.split(".")[1]) {
 							case "toast":
 								let pk = new ToastRequestPacket();
 								pk.settings = {
@@ -330,9 +330,9 @@ class Player extends Human {
 								};
 								pk.sendTo(this);
 								break;
-							case ".kickme":
-								this.close(this.server.bluebirdlang.get("kick_xbox_auth_required"));
-                break;
+							case "kickme":
+								this.close("", this.server.bluebirdlang.get("kick_xbox_auth_required"));
+								break;
 							case "form":
 								let form = new ModalFormRequestPacket();
 								form.id = 555;
@@ -456,7 +456,7 @@ class Player extends Human {
 	}
 
 	kick(reason, by){
-		this.close("", this.server.bluebirdlang.get("kick_kicked").replace("{by}", by).replace("{reason}", reason));
+		this.close("", this.server.bluebirdlang.get("kick_kicked").replace("${by}", by).replace("${reason}", reason));
 	}
 
 	/**

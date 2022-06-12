@@ -23,7 +23,6 @@ const DefaultCommandLoader = require("./command/DefaultCommandLoader");
 const Player = require("./Player");
 const MainLogger = require("./utils/MainLogger");
 const RakNetHandler = require("./network/RakNetHandler");
-const CommandSender = require("./command/CommandSender");
 const ConsoleCommandSender = require("./command/ConsoleCommandSender");
 const readline = require("readline");
 
@@ -67,7 +66,7 @@ class Server {
 		if (Server.instance === null) {
 			throw new Error("Instance is null");
 		}
-		return Server.instance();
+		return Server.instance;
 	}
 
 	/**
@@ -76,9 +75,8 @@ class Server {
 	start() {
 		let start_time = Date.now();
 		this.getLogger().info("Loading server...");
-		this.getLogger().info("Loading BlueBird.json");
-		if (!fs.existsSync("BlueBird.json")) {
-			let content = {
+		let contents = {
+			Main: {
 				"motd": "BlueBird Server",
 				"address": {
 					"name": "0.0.0.0",
@@ -88,24 +86,26 @@ class Server {
 				"maxplayers": 20,
 				"debug_level": 0,
 				"xbox-auth": true
-			};
-			fs.writeFileSync("BlueBird.json", JSON.stringify(content, null, 4));
+			},
+			Lang: {
+				"kick_username_required": "Username is required",
+				"kick_xbox_auth_required": "Please login into your Xbox account or else...",
+				"kick_invalid_session": "Invalid session",
+				"kick_resource_pack_required": "You must accept resource packs to join this server.",
+				"kick_invalid_skin": "Invalid skin!",
+				"kick_incompatible_protocol": "Incompatible protocol",
+				"kick_kicked": "Kicked by {by}, reason: ${reason}"
+			}
+		};
+		let names = {Main: "BlueBird.json", Lang: "Lang.json"};
+		for (const [type, name] of Object.entries(names)) {
+			this.getLogger().info("Loading " + name);
+			if (!fs.existsSync(name)) {
+				fs.writeFileSync(name, JSON.stringify(contents[type], null, 4));
+			}
 		}
-		this.getLogger().info("Loading Lang.json");
-		if (!fs.existsSync("Lang.json")) {
-			let content = {
-    				"kick_username_required": "Username is required",
-    				"kick_xbox_auth_required": "Please login into your Xbox account or else...",
-    				"kick_invalid_session": "Invalid session",
-    				"kick_resource_pack_required": "You must accept resource packs to join this server.",
-    				"kick_invalid_skin": "Invalid skin!",
-    				"kick_incompatible_protocol": "Incompatible protocol",
-    				"kick_kicked": "Kicked by {by}, reason: ${reason}"
-			};
-			fs.writeFileSync("Lang.json", JSON.stringify(content, null, 4));
-		}
-		this.bluebirdlang = new Config("Lang.json", Lang.TYPE_JSON);
 		this.bluebirdcfg = new Config("BlueBird.json", Config.TYPE_JSON);
+		this.bluebirdlang = new Lang("Lang.json");
 		this.getLogger().info(`This server is running ${this.serverName}, v${this.serverVersion}`);
 		this.getLogger().info(`${this.serverName} is distributed under GPLv3 License`);
 		let addrname = this.bluebirdcfg.getNested("address.name");
