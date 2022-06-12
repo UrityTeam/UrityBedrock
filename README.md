@@ -5,7 +5,6 @@ https://discord.gg/KQCYsxAD2b
 ### **Installing NodeJS on Linux**
 >
 > sudo apt update && apt install nodejs
-@@ -9,7 +9,7 @@ https://discord.gg/KQCYsxAD2b
 >
 > You should have NodeJS installed
 >
