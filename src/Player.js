@@ -123,7 +123,7 @@ class Player extends Human {
 				this.sendPlayStatus(PlayStatusPacket.LOGIN_FAILED_SERVER, true);
 			}
 			
-			this.close(this.server.bluebirdlang.get("kick_incompatible_protocol"))
+			this.close(this.server.bluebirdlang.get("kick_incompatible_protocol"));
 			return;
 		}
 
