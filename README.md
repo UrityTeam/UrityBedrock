@@ -10,5 +10,8 @@ Step 2. cd BlueBird
 
 Step 3. npm install
 
-Step 4. node start.js 
-Step 4. vscode f5
+Step 4. node start.js
+
+if u r using vscode
+
+Step 4. f5
