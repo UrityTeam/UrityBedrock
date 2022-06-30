@@ -103,10 +103,13 @@ class Server {
 				"kick_invalid_skin": "Invalid skin!",
 				"kick_incompatible_protocol": "Incompatible protocol",
 				"kick_kicked": "Kicked by ${by}, reason: ${reason}"
+			},
+			Files: {
+				Main: "BlueBird.json",
+				Lang: "Lang.json"
 			}
 		};
-		let names = {Main: "BlueBird.json", Lang: "Lang.json"};
-		for (const [type, name] of Object.entries(names)) {
+		for (const [type, name] of Object.entries(contents.Files)) {
 			this.getLogger().info("Loading " + name);
 			if (!fs.existsSync(name)) {
 				fs.writeFileSync(name, JSON.stringify(contents[type], null, 4));
