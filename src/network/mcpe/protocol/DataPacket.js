@@ -13,20 +13,13 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
+const assert = require("assert");
 const NetworkBinaryStream = require("../../NetworkBinaryStream");
 
 class DataPacket extends NetworkBinaryStream {
 	static NETWORK_ID = 0;
 
-	static PID_MASK = 0x3ff;
-
-	static SUBCLIENT_ID_MASK = 0x03;
-	static SENDER_SUBCLIENT_ID_SHIFT = 10;
-	static RECIPIENT_SUBCLIENT_ID_SHIFT = 12;
-
 	isEncoded = false;
-	senderSubId = 0;
-	recipientSubId = 0;
 	canBeBatched = true;
 
 	canBeSentBeforeLogin = false;
@@ -48,13 +41,7 @@ class DataPacket extends NetworkBinaryStream {
 	}
 
 	decodeHeader() {
-		let header = this.readVarInt();
-		let pid = header & DataPacket.PID_MASK;
-		if (pid !== this.getId()) {
-			throw new Error(`Expected ${this.getId()} for packet ID, got ${pid}`);
-		}
-		this.senderSubId = (header >> DataPacket.SENDER_SUBCLIENT_ID_SHIFT) & DataPacket.SUBCLIENT_ID_MASK;
-		this.recipientSubId = (header >> DataPacket.RECIPIENT_SUBCLIENT_ID_SHIFT) & DataPacket.SUBCLIENT_ID_MASK;
+		assert(this.readVarInt() === this.getId());
 	}
 
 	decodePayload() {}
@@ -67,10 +54,7 @@ class DataPacket extends NetworkBinaryStream {
 	}
 
 	encodeHeader() {
-		this.writeVarInt(this.getId() |
-			(this.senderSubId << DataPacket.SENDER_SUBCLIENT_ID_SHIFT) |
-			(this.recipientSubId << DataPacket.RECIPIENT_SUBCLIENT_ID_SHIFT)
-		);
+		this.writeVarInt(this.getId());
 	}
 
 	encodePayload() {}
