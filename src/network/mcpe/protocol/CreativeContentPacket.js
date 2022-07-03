@@ -24,7 +24,8 @@ class CreativeContentPacket extends DataPacket {
 	canBeSentBeforeLogin = true;
 
 	encodePayload() {
-		this.write(Buffer.from(CreativeContentPacket.HARDCODED_CC_BLOB, 'base64'));
+		// this.write(Buffer.from(CreativeContentPacket.HARDCODED_CC_BLOB, 'base64'));
+		this.writeVarInt(0);
 	}
 }
 
