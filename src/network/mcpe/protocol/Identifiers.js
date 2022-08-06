@@ -14,7 +14,7 @@
 \******************************************/
 
 class Identifiers {
-	static CURRENT_PROTOCOL = 537;
+	static CURRENT_PROTOCOL = 534;
 	static MINECRAFT_VERSION = "1.19.10";
 	static GAME_PACKET = 0xfe;
 	static LOGIN_PACKET = 0x01;
