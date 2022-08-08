@@ -48,7 +48,7 @@ class StartGamePacket extends DataPacket {
 		this.writeVarInt(4); // Spawn y
 		this.writeSignedVarInt(0); // Spawn z
 		this.writeBool(true); // Achievements Disabled
-		this.writeBool(false);
+		this.writeBool(false); // editor world
 		this.writeSignedVarInt(0); // Day Cycle Stop Time
 		this.writeSignedVarInt(0); // Edu offser
 		this.writeBool(false); // Edu features enabled
@@ -101,7 +101,7 @@ class StartGamePacket extends DataPacket {
 		this.writeString(""); // Multiplayer correction id
 		this.writeBool(false); // Server authoritative inventory
 		this.writeString("BlueBird"); // Engine
-		this.write(Buffer.from([0x0a, 0x00, 0x00])); // player properties
+		this.write(Buffer.from([0x0a, 0x00, 0x00])); // properties
 		this.writeLongLE(0n); // Block palette checksum
 		this.writeUUID(new UUID()); // world template id
 	}
