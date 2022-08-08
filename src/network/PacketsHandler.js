@@ -14,6 +14,13 @@
 \******************************************/
 
 class PacketsHandler { //TODO;
+	player;
+	server;
+
+	constructor(player, server) {
+		this.player = player;
+		this.server = server;
+	}
 }
 
 module.exports = PacketsHandler;
