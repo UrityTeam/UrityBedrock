@@ -76,6 +76,8 @@ class StartGamePacket extends DataPacket {
 		this.writeBool(false); // Is from world template
 		this.writeBool(false); // Is world template option locked
 		this.writeBool(false); // Only spawn v1 villagers
+		this.writeBool(false);
+		this.writeBool(false);
 		this.writeString(Identifiers.MINECRAFT_VERSION); // Game version
 		this.writeIntLE(0); // Limited world width
 		this.writeIntLE(0); // Limited world length
@@ -83,7 +85,8 @@ class StartGamePacket extends DataPacket {
 		this.writeString(""); // Button name
 		this.writeString(""); // Link uri
 		this.writeBool(false); // Experimental gameplay override
-
+		this.writeUnsignedByte(0);
+		this.writeBool(false);
 		this.writeString(""); // Level id
 		this.writeString(""); // World name
 		this.writeString(""); // Premium world template id
@@ -104,6 +107,7 @@ class StartGamePacket extends DataPacket {
 		this.write(Buffer.from([0x0a, 0x00, 0x00])); // properties
 		this.writeLongLE(0n); // Block palette checksum
 		this.writeUUID(new UUID()); // world template id
+		this.writeBool(false);
 	}
 }
 
