@@ -13,7 +13,7 @@
  * \ @author BlueBirdMC Team /            *
 \******************************************/
 
-const { RakNetServer, InternetAddress, Frame, ReliabilityTool } = require("bbmc-raknet");
+const { RakNetServer, InternetAddress, Frame, ReliabilityTool } = require("@urityteam/urityteamrak");
 const GamePacket = require("./mcpe/protocol/GamePacket");
 const Logger = require("../utils/MainLogger");
 const PacketPool = require("./mcpe/protocol/PacketPool");
